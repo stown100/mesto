@@ -1,0 +1,10 @@
+.profile__jack {
+    border-radius: 50%;
+    margin: 3.75px 30px 3.75px 0;
+}
+
+@media (min-width: 320px) and (max-width: 580px) {
+    .profile__jack {
+        margin: 0 auto;
+    }
+}

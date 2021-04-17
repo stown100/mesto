@@ -1,0 +1,11 @@
+.header {
+    margin: 45px 0 40px;
+    max-width: 100%;
+    border-bottom: 1px solid #545454;
+}
+
+@media (min-width: 320px) and (max-width: 580px) {
+    .header {
+        margin: 28px 0 42px;
+    }
+}
