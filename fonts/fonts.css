@@ -19,6 +19,6 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
-  src: url('../fonts/inter-v3-latin-500.woff2') format('woff2'),
-       url('../fonts/inter-v3-latin-500.woff') format('woff');
+  src: url('../fonts/inter-v3-cyrillic-500.woff2') format('woff2'),
+       url('../fonts/inter-v3-cyrillic-500.woff') format('woff');
 }
