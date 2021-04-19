@@ -6,14 +6,11 @@
     flex-direction: column;
     box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    margin: 0 auto;
     position: relative;
-    top: 195px;
 }
 
 @media (min-width: 320px) and (max-width: 740px) {
     .popup__container {
         max-width: 282px;
-        top: 123px;
     }
 }

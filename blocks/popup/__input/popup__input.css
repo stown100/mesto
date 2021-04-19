@@ -3,14 +3,20 @@
     font-weight: 400;
     line-height: 16,94px;
     border: 0;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     padding: 0 0 13px;
-    margin: 0 36px 30px;
+    margin-bottom: 30px;
     color: #000;
-    max-width: 358px;
+    width: 358px;
 }
 
 
 .popup__input:last-of-type {
     margin-bottom: 0;
+}
+
+@media (min-width: 320px) and (max-width: 740px) {
+    .popup__input {
+        max-width: 238px;
+    }
 }
