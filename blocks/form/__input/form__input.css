@@ -15,6 +15,7 @@
     margin-bottom: 0;
 }
 
+
 @media (min-width: 320px) and (max-width: 740px) {
     .form__input {
         max-width: 238px;

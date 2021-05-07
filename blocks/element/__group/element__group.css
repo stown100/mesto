@@ -1,7 +1,3 @@
-.element__group:active {
-    background-color: #000;
-}
-
 .element__group {
     cursor: pointer;
     transition: opacity 0.5s ease-in-out;

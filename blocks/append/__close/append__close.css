@@ -1,0 +1,23 @@
+.append__close {
+    max-width: 40px;
+    position: absolute;
+    right: -40px;
+    top: -40px;
+    color: #fff;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+    padding: 0;
+    border: 0;
+    background: rgba(0, 0, 0, 0);
+}
+
+.append__close:hover {
+    opacity: 0.6;
+}
+
+@media (min-width: 320px) and (max-width: 740px) {
+    .append__close {
+        max-width: 26px;
+        right: 0;
+    }
+}

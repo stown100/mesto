@@ -27,21 +27,29 @@
                     <p class="profile__subtitle">Исследователь океана</p>
                 </div>
             </div>
-            <button type="button" class="profile__vector-button">
+            <button type="submit" class="profile__vector-button">
                 <img src="./images/Vector.svg" class="profile__vector" alt="Плюс">
             </button>
         </section>
         <section class="elements">
-            <article class="element">
-                <img src="./images/kirill-pershin-1088404-unsplash.png" class="element__img" alt="Храм">
-                <div class="element__block">
-                    <h2 class="element__title">Карачевск</h2>
-                    <button type="button" class="element__like-btn">
-                        <img src="./images/Group.svg" class="element__group" alt="Лайк">
+            <template id="tmplt">
+                <article class="element">
+                    <button class="element__delete">
+                        <img src="./images/delete.svg" class="element__img-delete" atl="Удалить">
                     </button>
-                </div>
-            </article>
-            <article class="element">
+                    <img src="./images/kirill-pershin-1088404-unsplash.png" class="element__img" alt="Картинка">
+                    <div class="element__block">
+                        <h2 class="element__title"></h2>
+                        <button type="button" class="element__like-btn">
+                            <img src="./images/Group.svg" class="element__group" alt="Лайк">
+                        </button>
+                    </div>
+                </article>
+            </template>
+            <!--  <article class="element">
+                <button class="element__delete">
+                    <img src="./images/delete.svg" class="element__img-delete" atl="Удалить">
+                </button>
                 <img src="./images/kirill-pershin-1404681-unsplash.png" class="element__img" alt="Эльбрус">
                 <div class="element__block">
                     <h2 class="element__title">Гора Эльбрус</h2>
@@ -51,6 +59,9 @@
                 </div>
             </article>
             <article class="element">
+                <button class="element__delete">
+                    <img src="./images/delete.svg" class="element__img-delete" atl="Удалить">
+                </button>
                 <img src="./images/kirill-pershin-1556355-unsplash.png" class="element__img" alt="Домбай">
                 <div class="element__block">
                     <h2 class="element__title">Домбай</h2>
@@ -60,6 +71,9 @@
                 </div>
             </article>
             <article class="element">
+                <button class="element__delete">
+                    <img src="./images/delete.svg" class="element__img-delete" atl="Удалить">
+                </button>
                 <img src="./images/kirill-pershin-1404681-unsplash.png" class="element__img" alt="Эльбрус">
                 <div class="element__block">
                     <h2 class="element__title">Гора Эльбрус</h2>
@@ -69,6 +83,9 @@
                 </div>
             </article>
             <article class="element">
+                <button class="element__delete">
+                    <img src="./images/delete.svg" class="element__img-delete" atl="Удалить">
+                </button>
                 <img src="./images/kirill-pershin-1556355-unsplash.png" class="element__img" alt="Домбай">
                 <div class="element__block">
                     <h2 class="element__title">Домбай</h2>
@@ -78,6 +95,9 @@
                 </div>
             </article>
             <article class="element">
+                <button class="element__delete">
+                    <img src="./images/delete.svg" class="element__img-delete" atl="Удалить">
+                </button>
                 <img src="./images/kirill-pershin-1088404-unsplash.png" class="element__img" alt="Храм">
                 <div class="element__block">
                     <h2 class="element__title">Карачаево-Черкессия</h2>
@@ -85,21 +105,50 @@
                         <img src="./images/Group.svg" class="element__group" alt="Лайк">
                     </button>
                 </div>
-            </article>
+            </article> -->
         </section>
     </main>
     <footer class="footer">
         <p class="footer__img">© 2020 Mesto Russia</p>
     </footer>
+
+    <div class="popups">
+        <div class="popups__container">
+            <button type="button" class="popups__close">
+                <img src="./images/CloseIcon.svg" alt="Крестик">
+            </button>
+            <img src="" class="popups__container_img" alt="фото">
+            <h2 class="popups__title"></h2>
+        </div>
+    </div>
+
     <div class="popup">
+        <!-- <template id="template-popup"> -->
         <div class="popup__container">
             <button type="button" class="popup__close">
                 <img src="./images/CloseIcon.svg" alt="Крестик">
             </button>
             <form class="form" action="#" name="form">
                 <h3 class="form__title">Редактировать профиль</h3>
-                <input type="text" class="form__input form__input_type_name" value="Жак-Ив Кусто" name="name">
-                <input type="text" class="form__input form__input_type_role" value="Исследователь океана" name="role">
+                <input type="text" class="form__input form__input_type_name" name="name">
+                <input type="text" class="form__input form__input_type_role" name="role">
+                <button type="submit" class="form__button">Сохранить</button>
+            </form>
+        </div>
+        <!-- </template> -->
+    </div>
+
+    <div class="append">
+
+        <div class="append__container">
+            <button type="button" class="append__close">
+                <img src="./images/CloseIcon.svg" alt="Крестик">
+            </button>
+            <form class="form form_append" action="#" name="form">
+                <h3 class="form__title">Новое место</h3>
+                <input type="text" class="form__input form__input_type_title" placeholder="Название" name="title">
+                <input type="text" class="form__input form__input_type_link" placeholder="ссылка на картинку"
+                    name="link">
                 <button type="submit" class="form__button">Сохранить</button>
             </form>
         </div>
