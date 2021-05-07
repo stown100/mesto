@@ -84,7 +84,7 @@ function formSave(evt) {
     function openedNew(evt) {
         let target = evt.target;
         popups.classList.add('popups_opened');
-        const popupsImg = document.querySelector('.popups__container_img');
+        const popupsImg = document.querySelector('.popups__img');
         const popupsTitle = document.querySelector('.popups__title');
         popupsImg.src = target.src;
         popupsTitle.textContent = target.parentElement.querySelector('.element__title').textContent;
@@ -98,7 +98,7 @@ imageOpened.forEach(item => {
     item.addEventListener('click', function (evt) {
         let target = evt.target;
         popups.classList.add('popups_opened');
-        const popupsImg = document.querySelector('.popups__container_img');
+        const popupsImg = document.querySelector('.popups__img');
         const popupsTitle = document.querySelector('.popups__title');
         popupsImg.src = target.src;
         popupsTitle.textContent = target.parentElement.querySelector('.element__title').textContent;
