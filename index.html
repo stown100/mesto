@@ -27,14 +27,14 @@
                     <p class="profile__subtitle">Исследователь океана</p>
                 </div>
             </div>
-            <button type="submit" class="profile__vector-button">
+            <button type="name" class="profile__vector-button">
                 <img src="./images/Vector.svg" class="profile__vector" alt="Плюс">
             </button>
         </section>
         <section class="elements">
             <template id="tmplt">
                 <article class="element">
-                    <button class="element__delete">
+                    <button type="button" class="element__delete">
                         <img src="./images/delete.svg" class="element__img-delete" atl="Удалить">
                     </button>
                     <img src="./images/kirill-pershin-1088404-unsplash.png" class="element__img" alt="Картинка">
@@ -128,10 +128,10 @@
             <button type="button" class="popup__close">
                 <img src="./images/CloseIcon.svg" alt="Крестик">
             </button>
-            <form class="form" action="#" name="form">
+            <form class="form" action="#" name="formRedactProfile">
                 <h3 class="form__title">Редактировать профиль</h3>
-                <input type="text" class="form__input form__input_type_name" name="name">
-                <input type="text" class="form__input form__input_type_role" name="role">
+                <input type="text" class="form__input form__input_type_name" name="name" placeholder="">
+                <input type="text" class="form__input form__input_type_role" name="role" placeholder="">
                 <button type="submit" class="form__button">Сохранить</button>
             </form>
         </div>
@@ -144,7 +144,7 @@
             <button type="button" class="append__close">
                 <img src="./images/CloseIcon.svg" alt="Крестик">
             </button>
-            <form class="form form_append" action="#" name="form">
+            <form class="form form_append" action="#" name="formNewCard">
                 <h3 class="form__title">Новое место</h3>
                 <input type="text" class="form__input form__input_type_title" placeholder="Название" name="title">
                 <input type="text" class="form__input form__input_type_link" placeholder="ссылка на картинку"
