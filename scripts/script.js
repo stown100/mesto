@@ -56,14 +56,14 @@ const initialCards = [
 ];
 
 //Добавление карточек из массива
-function createCard({name, link}) {
-    const element = template.querySelector('.element').cloneNode(true);
-    element.querySelector('.element__img').src = link;
-    element.querySelector('.element__title').textContent = name;
-    sectionElements.append(element);
-    return template;
-}
-element.addEventListener('submit', createCard);
+// function createCard({name, link}) {
+//     const element = template.querySelector('.element').cloneNode(true);
+//     element.querySelector('.element__img').src = link;
+//     element.querySelector('.element__title').textContent = name;
+//     sectionElements.append(element);
+//     return template;
+// }
+// element.addEventListener('submit', createCard);
 
 initialCards.forEach(({ name, link }) => {
     const element = template.querySelector('.element').cloneNode(true);
