@@ -1,19 +1,34 @@
 const formElement = document.querySelector('.form[name="formNewCard"');
+const formProfile = document.querySelector('.form[name="formRedactProfile"]');
 const inputElementTitle = document.querySelector('.form__input[name="title"]');
 const inputElementLink = document.querySelector('.form__input[name="link"]');
 const inputElementName = document.querySelector('.form__input[name="name"]');
 const inputElementRole = document.querySelector('.form__input[name="role"]');
-const forms = document.querySelectorAll('.form')
+const forms = document.querySelector('.form');
+const inputElement = forms.querySelector('form__input');
 
-
-function enableValidation() {
-    const form = document.querySelector('.form[name="formNewCard"]');
-    form.addEventListener('submit', handleProfileFormSubmit);
-    form.addEventListener('input', handleFormInput);
-    const formProfile = document.querySelector('.form[name="formRedactProfile"]')
-    formProfile.addEventListener('submit', handleProfileFormSubmit);
-    formProfile.addEventListener('input', handleFormInput);
+function enableValidation(isValid) {
+    const formList = Array.from(document.querySelectorAll(isValid.formSelector));
+    formList.forEach((forms) => {
+        forms.addEventListener('input', handleFormInput);
+    })
+    setInputListener(forms, isValid);
+    // // formElement.addEventListener('submit', handleProfileFormSubmit);
+    // formElement.addEventListener('input', handleFormInput);
+    // // formProfile.addEventListener('submit', handleProfileFormSubmit);
+    // formProfile.addEventListener('input', handleFormInput);
 }
+
+function setInputListener(forms, isValid) {
+    const inputList = Array.from(forms.querySelector(isValid.inputSelector));
+    const button = forms.querySelector(isValid.submitButtonSelector);
+    inputList.forEach(inputElement => {
+        inputElement.addEventListener('input', () => {
+            isValid(forms, inputElement);
+        })
+    })
+}
+
 
 function handleProfileFormSubmit(evt) {
     evt.preventDefault();
@@ -30,7 +45,7 @@ function handleFormInput(evt) {
     setCastomError(input);  //Определяем невальдные поля и установим тексты ошибок
     validateProfile(input);
     setFieldError(input);  //Отобразим ошибки на форме
-    setSubmitButtonStare(form);   //Меняем кнопку
+    setSubmitButtonState(form);   //Меняем кнопку
 }
 
 
@@ -42,11 +57,11 @@ function setCastomError(input) {
         const currentLength = input.value.length;
         const min = input.getAttribute('minlength');
         const max = input.getAttribute('maxlength');
-        inputElementTitle.setCustomValidity(`Строка неверной длины. Введите от ${min} до ${max} символов`);
+        // inputElementTitle.setCustomValidity(`Строка неверной длины. Введите от ${min} до ${max} символов`);
         inputElementTitle.classList.add('form__input-border-error-title');
     }
     if (validity.typeMismatch) {
-        inputElementLink.setCustomValidity('Это не ссылка')
+        // inputElementLink.setCustomValidity('Это не ссылка')
         inputElementLink.classList.add('form__input-border-error');
     }
     if (inputElementLink.checkValidity()) {
@@ -60,8 +75,8 @@ function validateProfile(input) {
     if (validity.tooShort || validity.tooLong) {
         const min = input.getAttribute('minlength');
         const max = input.getAttribute('maxlength');
-        inputElementName.setCustomValidity(`Поле неверной длины. Введите от ${min} до ${max} символов`);
-        inputElementRole.setCustomValidity(`Поле неверной длины. Введите от ${min} до ${max} символов`);
+        // inputElementName.setCustomValidity(`Поле неверной длины. Введите от ${min} до ${max} символов`);
+        // inputElementRole.setCustomValidity(`Поле неверной длины. Введите от ${min} до ${max} символов`);
         inputElementName.classList.add('form__input-border-error-title');
         inputElementRole.classList.add('form__input-border-error');
     }
@@ -76,7 +91,7 @@ function setFieldError(input) {
     span.textContent = input.validationMessage;
 }
 
-function setSubmitButtonStare(forms) {
+function setSubmitButtonState(forms) {
     const button = forms.querySelector('.form__button');
     const isValid = forms.checkValidity();
     if (isValid) {
@@ -90,12 +105,13 @@ function setSubmitButtonStare(forms) {
     }
 }
 
+const isValid = {
+    formSelector: '.form',
+    inputSelector: '.form__input',
+    submitButtonSelector: '.form__button_valid',
+    inactiveButtonClass: '.form__button_invalid',
+    inputErrorClass: 'form__input-error',
+    errorClass: 'form__input'
+}
 
-enableValidation({
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error_visible'
-  });
+enableValidation(isValid);
