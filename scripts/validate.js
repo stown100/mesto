@@ -12,21 +12,6 @@ function enableValidation(isValid) {
     formList.forEach((forms) => {
         forms.addEventListener('input', handleFormInput);
     })
-    setInputListener(forms, isValid);
-    // // formElement.addEventListener('submit', handleProfileFormSubmit);
-    // formElement.addEventListener('input', handleFormInput);
-    // // formProfile.addEventListener('submit', handleProfileFormSubmit);
-    // formProfile.addEventListener('input', handleFormInput);
-}
-
-function setInputListener(forms, isValid) {
-    const inputList = Array.from(forms.querySelector(isValid.inputSelector));
-    const button = forms.querySelector(isValid.submitButtonSelector);
-    inputList.forEach(inputElement => {
-        inputElement.addEventListener('input', () => {
-            isValid(forms, inputElement);
-        })
-    })
 }
 
 
@@ -57,11 +42,9 @@ function setCastomError(input) {
         const currentLength = input.value.length;
         const min = input.getAttribute('minlength');
         const max = input.getAttribute('maxlength');
-        // inputElementTitle.setCustomValidity(`Строка неверной длины. Введите от ${min} до ${max} символов`);
         inputElementTitle.classList.add('form__input-border-error-title');
     }
     if (validity.typeMismatch) {
-        // inputElementLink.setCustomValidity('Это не ссылка')
         inputElementLink.classList.add('form__input-border-error');
     }
     if (inputElementLink.checkValidity()) {
@@ -75,8 +58,6 @@ function validateProfile(input) {
     if (validity.tooShort || validity.tooLong) {
         const min = input.getAttribute('minlength');
         const max = input.getAttribute('maxlength');
-        // inputElementName.setCustomValidity(`Поле неверной длины. Введите от ${min} до ${max} символов`);
-        // inputElementRole.setCustomValidity(`Поле неверной длины. Введите от ${min} до ${max} символов`);
         inputElementName.classList.add('form__input-border-error-title');
         inputElementRole.classList.add('form__input-border-error');
     }

@@ -169,10 +169,9 @@ function closePopupIsOverlay(evt) {
 
 //Закрытие попапов через ESC
 function closeEscPopup(evt) {
-    document.addEventListener('keydown', () => {
-        if (evt.key === 'Escape') {
-            const popup = document.querySelector('.popup_opened');
-            closePopup(popup);
-        }
-    })
+    if (evt.key === 'Escape') {
+        const popupOpened = document.querySelector('.popup_opened');
+        closePopup(popupOpened);
+        console.log('no')
+    }
 }
