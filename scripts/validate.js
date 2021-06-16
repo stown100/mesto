@@ -1,11 +1,7 @@
 const formElement = document.querySelector('.form[name="formNewCard"');
 const formProfile = document.querySelector('.form[name="formRedactProfile"]');
-const inputElementTitle = document.querySelector('.form__input[name="title"]');
-const inputElementLink = document.querySelector('.form__input[name="link"]');
-const inputElementName = document.querySelector('.form__input[name="name"]');
-const inputElementRole = document.querySelector('.form__input[name="role"]');
 const forms = document.querySelector('.form');
-const inputElement = forms.querySelector('form__input');
+const inputElement = document.querySelector('.form__input');
 
 function enableValidation(isValid) {
     const formList = Array.from(document.querySelectorAll(isValid.formSelector));
@@ -19,53 +15,40 @@ function handleProfileFormSubmit(evt) {
     evt.preventDefault();
     const form = evt.currentTarget;
     const isValid = form.checkValidity();
-    if (isValid) {
+    if (!isValid) {
         formElement.reset();
     }
 }
 
+  
 function handleFormInput(evt) {
     const input = evt.target;
     const form = evt.currentTarget;
     setCastomError(input);  //Определяем невальдные поля и установим тексты ошибок
-    validateProfile(input);
+    // validateProfile(input);
     setFieldError(input);  //Отобразим ошибки на форме
     setSubmitButtonState(form);   //Меняем кнопку
 }
 
-
 function setCastomError(input) {
     const validity = input.validity;
-    input.setCustomValidity('');
-    inputElementTitle.classList.remove('form__input-border-error-title');
-    if (validity.tooShort || validity.tooLong) {
-        const currentLength = input.value.length;
-        const min = input.getAttribute('minlength');
-        const max = input.getAttribute('maxlength');
-        inputElementTitle.classList.add('form__input-border-error-title');
+    if (validity) {
+        input.classList.add('form__input-border-error');
+    } 
+    if (input.checkValidity()) {
+        input.classList.remove('form__input-border-error');
     }
-    if (validity.typeMismatch) {
-        inputElementLink.classList.add('form__input-border-error');
-    }
-    if (inputElementLink.checkValidity()) {
-        inputElementLink.classList.remove('form__input-border-error');
-    }
+    // const inputList = Array.from(forms.querySelectorAll('.form__input'));
+    setSubmitButtonState(formElement);
+    // const buttonElement = formElement.querySelector('.form__submit');
+    // setSubmitButtonState(inputList, buttonElement);
 }
-function validateProfile(input) {
-    const validity = input.validity;
-    input.setCustomValidity('');
-    inputElementName.classList.remove('form__input-border-error-title');
-    if (validity.tooShort || validity.tooLong) {
-        const min = input.getAttribute('minlength');
-        const max = input.getAttribute('maxlength');
-        inputElementName.classList.add('form__input-border-error-title');
-        inputElementRole.classList.add('form__input-border-error');
-    }
-    if (inputElementRole.checkValidity()) {
-        inputElementRole.classList.remove('form__input-border-error');
-    }
-    setFieldError(input);
-}
+// function showError(input) {
+//     input.classList.add('form__input-border-error');
+// }
+// function hideError(input) {
+//     input.classList.remove('form__input-border-error');
+// }
 
 function setFieldError(input) {
     const span = document.querySelector(`#${input.id}-error`);
@@ -82,9 +65,22 @@ function setSubmitButtonState(forms) {
     } else {
         button.classList.remove('form__button_valid');
         button.classList.add('form__button_invalid');
-        button.setAttribute('disabled', 'disabled');
+        button.setAttribute('disabled', true);
     }
 }
+    // const button = Array.from(document.querySelectorAll(isValid.submitButtonSelector));
+    // button.forEach((button) => {
+    //     if (isValid) {
+    //         button.classList.add('form__button_valid');
+    //         button.classList.remove('form__button_invalid');
+    //         button.removeAttribute('disabled');     
+    //     } else {
+    //         button.classList.remove('form__button_valid');
+    //         button.classList.add('form__button_invalid');
+    //         button.setAttribute('disabled', 'disabled');
+    //     }
+    //     console.log('no')
+    // })
 
 const isValid = {
     formSelector: '.form',

@@ -1,4 +1,4 @@
-const popupList = document.querySelectorAll('.popup');
+const popupList = document.querySelector('.popup');
 const editBtn = document.querySelector('.profile__edit-button');
 const profilePopup = document.querySelector('.popup_profile');
 const buttonClosePopupProfile = document.querySelector('.popup__close_profile');
@@ -7,9 +7,9 @@ const jobInput = document.querySelector('.form__input_type_role');
 const popupSaveProfile = document.querySelector('.popup__container_profile');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
-const buttonClosePopupCard = document.querySelector('.profile__vector-button');
+const buttonOpenPopupCard = document.querySelector('.profile__vector-button');
 const newCardPopup = document.querySelector('.popup_images');
-const popupNewCardClose = document.querySelector('.popup__close_images');
+const buttonClosePopupCard = document.querySelector('.popup__close_images');
 const popupNewCardSave = document.querySelector('.popup__container_images');
 const inputTitleAppend = document.querySelector('.form__input_type_title');
 const inputLinkAppend = document.querySelector('.form__input_type_link');
@@ -61,10 +61,11 @@ function createCard(name, link) {
     return element;                                                     //возвращаю элемент
 }
 
-//Вызов функции createCard для добавления карточек из мессива
+//Вызов функции createCard для добавления карточек из массива
 initialCards.forEach(function (data) {                         //Перебираю массив методом forEach
     sectionElements.append(createCard(data.name, data.link));  //Добавляю карточки в начало списка с помощью вызова createCard
 });
+
 
 //Добавление карточек с кнопки
 function saveNewCard(evt) {
@@ -97,9 +98,6 @@ function closeImgPopup() {
     closePopup(popupImgOpen);
 };
 
-// function closePopupOverlay() {
-
-// }
 
 //Вызов openPopup для открытия попапа(первого)
 function openProfilePopup() {
@@ -118,6 +116,7 @@ function openNewCardSavePopup() {
     openPopup(newCardPopup);
     inputTitleAppend.value = inputTitleAppend.textContent;
     inputLinkAppend.value = inputLinkAppend.textContent;
+    setSubmitButtonState(formElement);
 };
 
 //Вызов ф-и closePopup для закрытия попапа(второго)
@@ -140,19 +139,21 @@ function openPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closeEscPopup);
 };
-
+const buttonList = document.querySelector('.form__button') 
 //Функция закрытия попапа
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', closeEscPopup);
+    // setSubmitButtonState(formElement);
+    // buttonList.classList.add('form__button_invalid');
 };
 
 //События
 editBtn.addEventListener('click', openProfilePopup);
 buttonClosePopupProfile.addEventListener('click', closeProfilePopup);
 popupSaveProfile.addEventListener('submit', handleProfileFormSubmit);
-buttonClosePopupCard.addEventListener('click', openNewCardSavePopup);
-popupNewCardClose.addEventListener('click', closeNewCardSavePopup);
+buttonOpenPopupCard.addEventListener('click', openNewCardSavePopup);
+buttonClosePopupCard.addEventListener('click', closeNewCardSavePopup);
 buttonClosePopupImg.addEventListener('click', closeImgPopup);
 popupNewCardSave.addEventListener('submit', saveNewCard);
 newCardPopup.addEventListener('click', closePopupIsOverlay);
