@@ -48,7 +48,7 @@ const initialCards = [
         link: 'https://i.pinimg.com/originals/14/42/58/14425875af759f49e319307a732dcfd4.jpg',
     },
 ];
-console.dir(initialCards);
+
 //Добавление карточек из массива
 function createCard(name, link) {
     const element = template.querySelector('.element').cloneNode(true); //клонирую элемент
@@ -173,6 +173,5 @@ function closeEscPopup(evt) {
     if (evt.key === 'Escape') {
         const popupOpened = document.querySelector('.popup_opened');
         closePopup(popupOpened);
-        console.log('no')
     }
 }
