@@ -3,8 +3,8 @@ const formProfile = document.querySelector('.form[name="formRedactProfile"]');
 const forms = document.querySelector('.form');
 const inputElement = document.querySelector('.form__input');
 
-function enableValidation(isValid) {
-    const formList = Array.from(document.querySelectorAll(isValid.formSelector));
+function enableValidation(configValidation) {
+    const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
     formList.forEach((forms) => {
         forms.addEventListener('input', handleFormInput);
     })
@@ -68,27 +68,15 @@ function setSubmitButtonState(forms) {
         button.setAttribute('disabled', true);
     }
 }
-    // const button = Array.from(document.querySelectorAll(isValid.submitButtonSelector));
-    // button.forEach((button) => {
-    //     if (isValid) {
-    //         button.classList.add('form__button_valid');
-    //         button.classList.remove('form__button_invalid');
-    //         button.removeAttribute('disabled');     
-    //     } else {
-    //         button.classList.remove('form__button_valid');
-    //         button.classList.add('form__button_invalid');
-    //         button.setAttribute('disabled', 'disabled');
-    //     }
-    //     console.log('no')
-    // })
 
-const isValid = {
+
+const configValidation = {
     formSelector: '.form',
     inputSelector: '.form__input',
-    submitButtonSelector: '.form__button_valid',
-    inactiveButtonClass: '.form__button_invalid',
+    submitButtonSelector: '.form__button',
+    inactiveButtonClass: 'form__button_invalid',
     inputErrorClass: 'form__input-error',
     errorClass: 'form__input'
 }
 
-enableValidation(isValid);
+enableValidation(configValidation);
