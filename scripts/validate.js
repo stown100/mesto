@@ -20,12 +20,11 @@ function handleProfileFormSubmit(evt) {
     }
 }
 
-  
+
 function handleFormInput(evt) {
     const input = evt.target;
     const form = evt.currentTarget;
     setCastomError(input);  //Определяем невальдные поля и установим тексты ошибок
-    // validateProfile(input);
     setFieldError(input);  //Отобразим ошибки на форме
     setSubmitButtonState(form);   //Меняем кнопку
 }
@@ -34,14 +33,11 @@ function setCastomError(input) {
     const validity = input.validity;
     if (validity) {
         input.classList.add('form__input-border-error');
-    } 
+    }
     if (input.checkValidity()) {
         input.classList.remove('form__input-border-error');
     }
-    // const inputList = Array.from(forms.querySelectorAll('.form__input'));
     setSubmitButtonState(formElement);
-    // const buttonElement = formElement.querySelector('.form__submit');
-    // setSubmitButtonState(inputList, buttonElement);
 }
 // function showError(input) {
 //     input.classList.add('form__input-border-error');

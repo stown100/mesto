@@ -139,7 +139,7 @@ function openPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closeEscPopup);
 };
-const buttonList = document.querySelector('.form__button') 
+const buttonList = document.querySelector('.form__button')
 //Функция закрытия попапа
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
@@ -163,7 +163,7 @@ profilePopup.addEventListener('click', closePopupIsOverlay);
 
 //Закрытие попапов при нажатии на overlay
 function closePopupIsOverlay(evt) {
-    if(evt.target === evt.currentTarget) {
+    if (evt.target === evt.currentTarget) {
         closePopup(evt.target)
     }
 }
