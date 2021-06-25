@@ -1,7 +1,14 @@
-const formElement = document.querySelector('.form[name="formNewCard"');
-const formProfile = document.querySelector('.form[name="formRedactProfile"]');
+const formElement = document.querySelector('.form[name="formNewCard"]');
 const forms = document.querySelector('.form');
-const inputElement = document.querySelector('.form__input');
+
+const configValidation = {
+    formSelector: '.form',
+    inputSelector: '.form__input',
+    submitButtonSelector: '.form__button',
+    inactiveButtonClass: 'form__button_invalid',
+    inputErrorClass: 'form__input-border-error',
+    errorClass: 'form__input'
+}
 
 function enableValidation(configValidation) {
     const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
@@ -32,19 +39,20 @@ function handleFormInput(evt) {
 function setCastomError(input) {
     const validity = input.validity;
     if (validity) {
-        input.classList.add('form__input-border-error');
+        showError(input);
     }
     if (input.checkValidity()) {
-        input.classList.remove('form__input-border-error');
+        hideError(input);
     }
-    setSubmitButtonState(formElement);
+    setSubmitButtonState(forms);
 }
-// function showError(input) {
-//     input.classList.add('form__input-border-error');
-// }
-// function hideError(input) {
-//     input.classList.remove('form__input-border-error');
-// }
+
+function showError(input) {
+    input.classList.add(configValidation.inputErrorClass);
+}
+function hideError(input) {
+    input.classList.remove(configValidation.inputErrorClass);
+}
 
 function setFieldError(input) {
     const span = document.querySelector(`#${input.id}-error`);
@@ -52,27 +60,15 @@ function setFieldError(input) {
 }
 
 function setSubmitButtonState(forms) {
-    const button = forms.querySelector('.form__button');
+    const button = forms.querySelector(configValidation.submitButtonSelector);
     const isValid = forms.checkValidity();
     if (isValid) {
-        button.classList.add('form__button_valid');
-        button.classList.remove('form__button_invalid');
+        button.classList.remove(configValidation.inactiveButtonClass);
         button.removeAttribute('disabled');
     } else {
-        button.classList.remove('form__button_valid');
-        button.classList.add('form__button_invalid');
+        button.classList.add(configValidation.inactiveButtonClass);
         button.setAttribute('disabled', true);
     }
-}
-
-
-const configValidation = {
-    formSelector: '.form',
-    inputSelector: '.form__input',
-    submitButtonSelector: '.form__button',
-    inactiveButtonClass: 'form__button_invalid',
-    inputErrorClass: 'form__input-error',
-    errorClass: 'form__input'
 }
 
 enableValidation(configValidation);

@@ -62,9 +62,12 @@ function createCard(name, link) {
 }
 
 //Вызов функции createCard для добавления карточек из массива
-initialCards.forEach(function (data) {                         //Перебираю массив методом forEach
-    sectionElements.append(createCard(data.name, data.link));  //Добавляю карточки в начало списка с помощью вызова createCard
-});
+function initialCardsF() {
+    initialCards.forEach((data) => {                         //Перебираю массив методом forEach
+        sectionElements.append(createCard(data.name, data.link));  //Добавляю карточки в начало списка с помощью вызова createCard
+    });
+}
+initialCardsF();
 
 
 //Добавление карточек с кнопки
@@ -97,7 +100,6 @@ function openedCard(evt) {
 function closeImgPopup() {
     closePopup(popupImgOpen);
 };
-
 
 //Вызов openPopup для открытия попапа(первого)
 function openProfilePopup() {
@@ -139,27 +141,12 @@ function openPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closeEscPopup);
 };
-const buttonList = document.querySelector('.form__button')
+
 //Функция закрытия попапа
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', closeEscPopup);
-    // setSubmitButtonState(formElement);
-    // buttonList.classList.add('form__button_invalid');
 };
-
-//События
-editBtn.addEventListener('click', openProfilePopup);
-buttonClosePopupProfile.addEventListener('click', closeProfilePopup);
-popupSaveProfile.addEventListener('submit', handleProfileFormSubmit);
-buttonOpenPopupCard.addEventListener('click', openNewCardSavePopup);
-buttonClosePopupCard.addEventListener('click', closeNewCardSavePopup);
-buttonClosePopupImg.addEventListener('click', closeImgPopup);
-popupNewCardSave.addEventListener('submit', saveNewCard);
-newCardPopup.addEventListener('click', closePopupIsOverlay);
-popupImgOpen.addEventListener('click', closePopupIsOverlay);
-profilePopup.addEventListener('click', closePopupIsOverlay);
-
 
 //Закрытие попапов при нажатии на overlay
 function closePopupIsOverlay(evt) {
@@ -175,3 +162,15 @@ function closeEscPopup(evt) {
         closePopup(popupOpened);
     }
 }
+
+//События
+editBtn.addEventListener('click', openProfilePopup);
+buttonClosePopupProfile.addEventListener('click', closeProfilePopup);
+popupSaveProfile.addEventListener('submit', handleProfileFormSubmit);
+buttonOpenPopupCard.addEventListener('click', openNewCardSavePopup);
+buttonClosePopupCard.addEventListener('click', closeNewCardSavePopup);
+buttonClosePopupImg.addEventListener('click', closeImgPopup);
+popupNewCardSave.addEventListener('submit', saveNewCard);  //
+newCardPopup.addEventListener('click', closePopupIsOverlay);
+popupImgOpen.addEventListener('click', closePopupIsOverlay);
+profilePopup.addEventListener('click', closePopupIsOverlay);
