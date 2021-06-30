@@ -1,103 +1,61 @@
-const forms = document.querySelector('.form');
-
-const formProfile = document.querySelector('.form[name="formRedactProfile"]');
-const formElement = document.querySelector('.form[name="formNewCard"]');
-
-const configValidation = {
-    formSelector: '.form',
-    inputSelector: '.form__input',
-    submitButtonSelector: '.form__button',
-    inactiveButtonClass: 'form__button_invalid',
-    inputErrorClass: 'form__input-border-error',
-    errorClass: 'form__input'
-}
-// import { configValidation } from './script.js'
-class FormValidator {
-    constructor(formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass) {
+export class FormValidator {
+    constructor(configValidation, formSelector) {
         this._configValidation = configValidation;
-        this._formElement = configValidation.formSelector;
-        // this._formSelector = configValidation.formSelector;
-        // this._inputSelector = forms.querySelector(configValidation.inputSelector);
-        // this._submitButtonSelector = forms.querySelector(configValidation.submitButtonSelector);
-        // this._inactiveButtonClass = configValidation.inactiveButtonClass;
-        // this._inputErrorClass = configValidation.inputErrorClass;
-        // this._errorClass = configValidation.errorClass;
+        this._formSelector = formSelector;
     }
 
-    _handleProfileFormSubmit(evt) {
-        evt.preventDefault();
-        const form = evt.currentTarget;
-        const isValid = form.checkValidity();
-        if (!isValid) {
-            formElement.reset();
-        }
-    }
+    enableValidation() {
+        this._formSelector.addEventListener("submit", (evt) => {
+          evt.preventDefault();
+        });
+        this._handleFormInput();
+      }
 
-    _setCastomError(input) {
-        const validity = input.validity;
-        if (validity) {
-            showError(input);
-        }
-        if (input.checkValidity()) {
-            hideError(input);
-        }
-        setSubmitButtonState(forms);
+    
+    _handleFormInput() {
+        this._inputList = Array.from(this._formSelector.querySelectorAll(this._configValidation.inputSelector));
+        this._setSubmitButtonState();
+        this._inputList.forEach((_input) => {
+          _input.addEventListener("input", () => {
+            this._setCastomError(_input);
+            this._setSubmitButtonState();
+          });
+        });
     }
     
+    _setCastomError(input) {
+        if (!input.validity.valid) {
+            this._showError(input, input.validationMessage);
+          } else {
+            this._hideError(input);
+          }
+    }
+
+    _setFieldError(input) {
+        const span = this._formSelector.querySelector(`#${input.id}-error`);
+        span.textContent = input.validationMessage;
+    }
+
     _showError(input) {
-        input.classList.add(configValidation.inputErrorClass);
+        this._setFieldError(input);   
+        input.classList.add(this._configValidation.inputErrorClass);
     }
 
     _hideError(input) {
-        input.classList.remove(configValidation.inputErrorClass);
+        this._setFieldError(input);
+        input.classList.remove(this._configValidation.inputErrorClass);
     }
-    
-    _setFieldError(input) {
-        const span = document.querySelector(`#${input.id}-error`);
-        span.textContent = input.validationMessage;
-    }
-    
-    _setSubmitButtonState(forms) {
-        const button = forms.querySelector(configValidation.submitButtonSelector);
-        const isValid = forms.checkValidity();
+                                                                                    //НАСТРОИТЬ КНОПКУ ПОСЛЕ ОТПРАВКИ ФОРМЫ
+    _setSubmitButtonState() {
+        this._button = this._formSelector.querySelector(this._configValidation.submitButtonSelector);
+        const isValid = this._formSelector.checkValidity();
         if (isValid) {
-            button.classList.remove(configValidation.inactiveButtonClass);
-            button.removeAttribute('disabled');
-        } else {
-            button.classList.add(configValidation.inactiveButtonClass);
-            button.setAttribute('disabled', true);
+            this._button.classList.remove(this._configValidation.inactiveButtonClass);
+            this._button.removeAttribute('disabled');
         }
-    }
-
-    _handleFormInput(evt) {
-        const input = evt.target;
-        const form = evt.currentTarget;
-        setCastomError(input);  //Определяем невальдные поля и установим тексты ошибок
-        setFieldError(input);  //Отобразим ошибки на форме
-        setSubmitButtonState(form);   //Меняем кнопку
-    }
-
-    enableValidation(configValidation) {
-        const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
-        formList.forEach((forms) => {
-            forms.addEventListener('input', handleFormInput);
-        })
-    }
+        if (!isValid) {
+          this._button.classList.add(this._configValidation.inactiveButtonClass);
+          this._button.setAttribute('disabled', 'disabled');
+        }
+      };
 }
-console.log(new FormValidator())
-// const validatorJS = new FormValidator(configValidation)
-// class FormValidatorProfile extends FormValidator {
-//     constructor(inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass) {
-//         super(inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass);
-//         this._formSelector = formProfile;
-//     }
-// }
-// // console.log(new FormValidatorProfile())
-// class FormValidatorNewCard extends FormValidator {
-//     constructor(inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass) {
-//         super(inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass);
-//         this._formSelector = formElement;
-//     }
-// }
-
-export { FormValidator }
