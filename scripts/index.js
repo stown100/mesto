@@ -25,7 +25,6 @@ const popupNewCardSave = document.querySelector('.popup__container_images');
 const inputTitleAppend = document.querySelector('.form__input_type_title');
 const inputLinkAppend = document.querySelector('.form__input_type_link');
 const sectionElements = document.querySelector('.elements');
-const template = document.querySelector('#tmplt').content;
 const popupImgOpen = document.querySelector('.popup_img');
 const buttonClosePopupImg = document.querySelector('.popup__close_img');
 const formElement = document.querySelector('.form[name="formNewCard"]');
@@ -64,15 +63,10 @@ formList.forEach((formSelector) => {
   });
 
 initialCards.forEach((item) => {
-    const card = new Card( item.name, item.link, template, openPopup, popupImgOpen);
+    const card = new Card( item.name, item.link, openPopup, popupImgOpen);
     const cardElement = card.createCard();
     sectionElements.append(cardElement);
   })
-
-//Закрытие третьего попапа(крестик)
-function closeImgPopup() {
-    closePopup(popupImgOpen);
-};
 
 //Открытие первого попапа
 function openProfilePopup() {
@@ -81,21 +75,13 @@ function openProfilePopup() {
     jobInput.value = profileSubtitle.textContent;
 }
 
-//Закрытие первого попапа(крестик)
-function closeProfilePopup() {
-    closePopup(profilePopup);
-};
-
 //закрытие первого попапа через 'Сохранить'
 function handleProfileFormSubmit(evt) {
     evt.preventDefault();
-    const valueJob = jobInput.value;
-    const valueName = nameInput.value;
-    profileTitle.textContent = valueName;
-    profileSubtitle.textContent = valueJob;
+    profileTitle.textContent = nameInput.value;
+    profileSubtitle.textContent = jobInput.value;
     closePopup(profilePopup);
 };
-
 
 //Открытие второго попапа
 function openNewCardSavePopup() {
@@ -104,18 +90,13 @@ function openNewCardSavePopup() {
     inputLinkAppend.value = inputLinkAppend.textContent;
 };
 
-//Закрытие второго попапа(крестик)
-function closeNewCardSavePopup() {
-    closePopup(newCardPopup);
-};
-
 //Закрытие второго попапа(Добавление карточек с кнопки)
 function saveNewCard(evt) {
     evt.preventDefault();                                                               //чтоб небыло перезагрузски при сохранении
     const buttonElement = formElement.querySelector(configValidation.submitButtonSelector);  //Находим кнопку
     buttonElement.classList.add(configValidation.inactiveButtonClass);  //Добавляем класс неактивной кнопки
     buttonElement.setAttribute('disabled', true);                       //ставим неактивную кнопку
-    const card = new Card(inputTitleAppend.value, inputLinkAppend.value, template, openPopup, popupImgOpen);
+    const card = new Card(inputTitleAppend.value, inputLinkAppend.value, openPopup, popupImgOpen);
     const cardElement = card.createCard();
     sectionElements.prepend(cardElement);                   //добавляем новую карточку в начало таблицы
     closePopup(newCardPopup);                              //Закрываем попап после добавления карточки
@@ -127,10 +108,29 @@ function openPopup(popup) {
     document.addEventListener('keydown', closeEscPopup);
 };
 
+
+// Стирает бордер
+function deleteErrorClass() {
+    const inputElements = document.querySelectorAll('.form__input');
+    inputElements.forEach((input) => {
+        input.classList.remove('form__input-border-error');
+    })
+    deleteErrorMessage();
+}
+
+//Стирает текст ошибок
+function deleteErrorMessage() {
+    const span = document.querySelectorAll('.form__input-error');
+    span.forEach((sp) => {
+        sp.style.display = 'none'
+    })
+}
+
 //Функция закрытия попапа
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', closeEscPopup);
+    deleteErrorClass();
 };
 
 //Закрытие попапов при нажатии на overlay
@@ -150,12 +150,12 @@ function closeEscPopup(evt) {
 
 //События
 editBtn.addEventListener('click', openProfilePopup);
-buttonClosePopupProfile.addEventListener('click', closeProfilePopup);
+buttonClosePopupProfile.addEventListener('click', () => closePopup(profilePopup));
+buttonClosePopupCard.addEventListener('click', () => closePopup(newCardPopup));
+buttonClosePopupImg.addEventListener('click', () => closePopup(popupImgOpen));
 popupSaveProfile.addEventListener('submit', handleProfileFormSubmit);
 buttonOpenPopupCard.addEventListener('click', openNewCardSavePopup);
-buttonClosePopupCard.addEventListener('click', closeNewCardSavePopup);
-buttonClosePopupImg.addEventListener('click', closeImgPopup);
-popupNewCardSave.addEventListener('submit', saveNewCard);  //
+popupNewCardSave.addEventListener('submit', saveNewCard);
 newCardPopup.addEventListener('click', closePopupIsOverlay);
 popupImgOpen.addEventListener('click', closePopupIsOverlay);
 profilePopup.addEventListener('click', closePopupIsOverlay);
