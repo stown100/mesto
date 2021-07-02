@@ -9,6 +9,7 @@ const configValidation = {
     errorClass: 'form__input'
 }
 
+const cardSelector = document.querySelector('#tmplt').content
 const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
 const editBtn = document.querySelector('.profile__edit-button');
 const profilePopup = document.querySelector('.popup_profile');

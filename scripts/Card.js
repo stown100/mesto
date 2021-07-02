@@ -3,12 +3,13 @@ export class Card {
         this._name = name;
         this._link = link;
         this._openPopup = openPopup;
+        this._cardSelector = '#tmplt';
     }
 
     //Добавление карточек из массива
     createCard() {
         this._element = this._getTemplate();
-        this._element = this._setEventListeners();
+        this._setEventListeners();
         this._element.querySelector('.element__img').src = this._link;                  //передаю данные
         this._element.querySelector('.element__img').alt = this._name;                  //передаю данные
         this._element.querySelector('.element__title').textContent = this._name;        //передаю данные
@@ -16,14 +17,14 @@ export class Card {
     }
 
     _getTemplate() {
-        return this._element = document.querySelector('#tmplt').content.querySelector('.element').cloneNode(true); //клонирую элемент
+        const element = document.querySelector(this._cardSelector).content.querySelector('.element').cloneNode(true); //клонирую элемент
+        return element;
     }
 
     _setEventListeners() {
         this._element.querySelector('.element__group').addEventListener('click', this._likeCard); //обработчик события лайка
         this._element.querySelector('.element__delete').addEventListener('click', this._deleteCard); //обработчик события удаления
         this._element.querySelector('.element__img').addEventListener('click', this._openedCard); //обработчик события открытия в большом размере
-        return this._element; 
     }
 
     //функция лайка
