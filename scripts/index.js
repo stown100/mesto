@@ -9,7 +9,7 @@ const configValidation = {
     errorClass: 'form__input'
 }
 
-const cardSelector = document.querySelector('#tmplt').content
+const cardSelector = document.querySelector('#tmplt').content;
 const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
 const editBtn = document.querySelector('.profile__edit-button');
 const profilePopup = document.querySelector('.popup_profile');
@@ -64,7 +64,7 @@ formList.forEach((formSelector) => {
   });
 
 initialCards.forEach((item) => {
-    const card = new Card( item.name, item.link, openPopup, popupImgOpen);
+    const card = new Card( item.name, item.link, openPopup, cardSelector);
     const cardElement = card.createCard();
     sectionElements.append(cardElement);
   })
