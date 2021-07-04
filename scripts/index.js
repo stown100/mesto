@@ -9,7 +9,6 @@ const configValidation = {
     errorClass: 'form__input'
 }
 
-const cardSelector = document.querySelector('#tmplt').content;
 const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
 const editBtn = document.querySelector('.profile__edit-button');
 const profilePopup = document.querySelector('.popup_profile');
@@ -29,7 +28,7 @@ const sectionElements = document.querySelector('.elements');
 const popupImgOpen = document.querySelector('.popup_img');
 const buttonClosePopupImg = document.querySelector('.popup__close_img');
 const formElement = document.querySelector('.form[name="formNewCard"]');
-
+const cardSelector = '#tmplt';
 const initialCards = [
     {
         name: 'Nissan Silvia s13',
@@ -64,7 +63,7 @@ formList.forEach((formSelector) => {
   });
 
 initialCards.forEach((item) => {
-    const card = new Card( item.name, item.link, openPopup, cardSelector);
+    const card = new Card( item.name, item.link, cardSelector, openPopup);
     const cardElement = card.createCard();
     sectionElements.append(cardElement);
   })
@@ -97,7 +96,7 @@ function saveNewCard(evt) {
     const buttonElement = formElement.querySelector(configValidation.submitButtonSelector);  //Находим кнопку
     buttonElement.classList.add(configValidation.inactiveButtonClass);  //Добавляем класс неактивной кнопки
     buttonElement.setAttribute('disabled', true);                       //ставим неактивную кнопку
-    const card = new Card(inputTitleAppend.value, inputLinkAppend.value, openPopup, popupImgOpen);
+    const card = new Card(inputTitleAppend.value, inputLinkAppend.value, cardSelector, openPopup);
     const cardElement = card.createCard();
     sectionElements.prepend(cardElement);                   //добавляем новую карточку в начало таблицы
     closePopup(newCardPopup);                              //Закрываем попап после добавления карточки

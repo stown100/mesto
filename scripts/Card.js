@@ -1,9 +1,9 @@
 export class Card {
-    constructor(name, link, openPopup, cardSelector) {
+    constructor(name, link, cardSelector, openPopup) {
         this._name = name;
         this._link = link;
-        this._openPopup = openPopup;
         this._cardSelector = cardSelector;
+        this._openPopup = openPopup;
     }
 
     //Добавление карточек из массива
@@ -17,7 +17,11 @@ export class Card {
     }
 
     _getTemplate() {
-        const element = document.querySelector('#tmplt').content.querySelector('.element').cloneNode(true); //клонирую элемент
+        const element = document
+        .querySelector(this._cardSelector)
+        .content
+        .querySelector('.element')
+        .cloneNode(true);
         return element;
     }
 
