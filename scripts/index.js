@@ -14,8 +14,7 @@ const configValidation = {
     errorClass: 'form__input'
 }
 
-export const popup = document.querySelector('.popup');                      //8
-const popupSelector = document.querySelectorAll('.popup'); //8
+export const popup = '.popup';                      //8
 const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
 const editBtn = document.querySelector('.profile__edit-button');
 const profilePopup = document.querySelector('.popup_profile');
@@ -23,8 +22,6 @@ const buttonClosePopupProfile = document.querySelector('.popup__close_profile');
 const nameInput = document.querySelector('.form__input_type_name');
 const jobInput = document.querySelector('.form__input_type_role');
 const popupSaveProfile = document.querySelector('.popup__container_profile');
-const profileTitle = document.querySelector('.profile__title');
-const profileSubtitle = document.querySelector('.profile__subtitle');
 const buttonOpenPopupCard = document.querySelector('.profile__vector-button');
 const newCardPopup = document.querySelector('.popup_images');
 const buttonClosePopupCard = document.querySelector('.popup__close_images');
@@ -35,7 +32,6 @@ export const sectionElements = '.elements';
 const popupImgOpen = document.querySelector('.popup_img');
 const buttonClosePopupImg = document.querySelector('.popup__close_img');
 export const cardSelector = '#tmplt';
-const cardElement = document.querySelector('.element')
 const initialCards = [
     {
         name: 'Nissan Silvia s13',
@@ -62,35 +58,55 @@ const initialCards = [
         link: 'https://i.pinimg.com/originals/14/42/58/14425875af759f49e319307a732dcfd4.jpg',
     },
 ];
-// const [ myName, miLink, myNameTwo, miLinkTwo ] = initialCards            Тренировка
-// console.log([ myName, miLink, myNameTwo, miLinkTwo ]) 
+
+const userInfoClass = new UserInfo(nameInput, jobInput);
+const popupWithImageClass = new PopupWithImage();
+const popupWithFormClass = new PopupWithForm(popup, saveNewCard);
+const sectionClass = new Section({items: initialCards, renderer: (item) => { addCard( item.name, item.link );}
+}, sectionElements);
+sectionClass.renderer();
+
+
 
 formList.forEach((formSelector) => {
     const validation = new FormValidator(configValidation, formSelector);
     validation.enableValidation();
   });
+function addCard() {
+    initialCards.forEach((item) => {
+        const card = new Card( item.name, item.link, cardSelector );
+        const cardElement = card.createCard();
+        sectionClass.addItem(cardElement);
+      })
+}
 
-initialCards.forEach((item) => {
-    const card = new Card( item.name, item.link, cardSelector );
-    const cardElement = card.createCard();
-    document.querySelector(sectionElements).append(cardElement);
-    return cardElement;
-    // const sectionClass = new Section( {item,
-    //     renderer: () => {
-    //       const card = new Card( item.name, item.link, cardSelector );
-    //         const popupWithImage = new PopupWithImage(popupImgOpen, cardElement);
-    //         popupWithImage.open();
-    //         const cardElement = card.createCard();
-    //         document.querySelector(sectionElements).append(cardElement);
-    //         sectionClass.addItem(element)
-    //         getUserInfo()},}, sectionElements )
-    //         console.log(sectionClass)
-  })
+//Закрытие второго попапа(Добавление карточек с кнопки)
+function saveNewCard() {
+    const buttonElement = document.querySelector('.form[name="formNewCard"]')
+    .querySelector(configValidation.submitButtonSelector);  //Находим кнопку
+    buttonElement.classList.add(configValidation.inactiveButtonClass);  //Добавляем класс неактивной кнопки
+    buttonElement.setAttribute('disabled', true);                       //ставим неактивную кнопку
+    const card = new Card(inputTitleAppend.value, inputLinkAppend.value, cardSelector);
+    const cardElement = card.createCard();  //Скинул гит без константы и prepend
+    document.querySelector(sectionElements).prepend(cardElement);                   //добавляем новую карточку в начало таблицы
+    popupWithFormClass.close(newCardPopup);                            //Закрываем попап после добавления карточки
+};
 
-const userInfoClass = new UserInfo(nameInput, jobInput);
-const popupWithImageClass = new PopupWithImage();
-const popupWithFormClass = new PopupWithForm(popup, saveNewCard);
-const popupClass = new Popup(popup);              //Обьявлен для закрытия по Оверлей
+//События
+editBtn.addEventListener('click', () => {userInfoClass.getUserInfo(profilePopup)});
+buttonClosePopupProfile.addEventListener('click', () => {userInfoClass.close(profilePopup)});
+buttonClosePopupCard.addEventListener('click', () => {popupWithFormClass.close(newCardPopup)});
+buttonClosePopupImg.addEventListener('click', () => popupWithImageClass.close(popupImgOpen));
+popupSaveProfile.addEventListener('submit', () => userInfoClass.setUserInfo());
+buttonOpenPopupCard.addEventListener('click', () => {popupWithFormClass.open(newCardPopup)});
+popupNewCardSave.addEventListener('submit', saveNewCard);
+popupWithFormClass.setEventListeners(newCardPopup);
+popupWithImageClass.setEventListeners(popupImgOpen);
+userInfoClass.setEventListeners(profilePopup);
+
+
+
+                                                                //Старый код-позже удалить
 // //Открытие первого попапа
 // function openProfilePopup() {
 //     nameInput.value = profileTitle.textContent;
@@ -113,18 +129,8 @@ const popupClass = new Popup(popup);              //Обьявлен для за
 //     inputLinkAppend.value = inputLinkAppend.textContent;
 // };
 
-//Закрытие второго попапа(Добавление карточек с кнопки)
-function saveNewCard() {
-    // evt.preventDefault();                                              //чтоб небыло перезагрузски при сохранении
-    const buttonElement = document.querySelector('.form[name="formNewCard"]')
-    .querySelector(configValidation.submitButtonSelector);  //Находим кнопку
-    buttonElement.classList.add(configValidation.inactiveButtonClass);  //Добавляем класс неактивной кнопки
-    buttonElement.setAttribute('disabled', true);                       //ставим неактивную кнопку
-    const card = new Card(inputTitleAppend.value, inputLinkAppend.value, cardSelector);
-    card.createCard();
-    // document.querySelector(sectionElements).prepend(cardElement);                   //добавляем новую карточку в начало таблицы
-    popupWithFormClass.setEventListenersForm(newCardPopup);     //ИСПРАВИТЬ                         //Закрываем попап после добавления карточки
-};
+
+
 
 //Функция открытия попапа
 // function openPopup(popup) {
@@ -151,11 +157,11 @@ function saveNewCard() {
 // }
 
 //Функция закрытия попапа
-function closePopup(popup) {
-    popup.classList.remove('popup_opened');
-    // document.removeEventListener('keydown', handleEscClose);
-    // deleteErrorClass();
-};
+// function closePopup(popup) {
+//     popup.classList.remove('popup_opened');
+//     document.removeEventListener('keydown', handleEscClose);
+//     deleteErrorClass();
+// };
 
 //Закрытие попапов при нажатии на overlay
 // function closePopupIsOverlay(evt) {
@@ -171,15 +177,3 @@ function closePopup(popup) {
 //         closePopup(popupOpened);
 //     }
 // }
-
-//События
-editBtn.addEventListener('click', () => {userInfoClass.getUserInfo()});
-buttonClosePopupProfile.addEventListener('click', () => {userInfoClass.close(profilePopup)});
-buttonClosePopupCard.addEventListener('click', () => {popupWithFormClass.close(newCardPopup)});
-buttonClosePopupImg.addEventListener('click', () => popupWithImageClass.close(popupImgOpen));
-popupSaveProfile.addEventListener('submit', () => userInfoClass.setUserInfo());
-buttonOpenPopupCard.addEventListener('click', () => {popupWithFormClass.open(newCardPopup)});
-popupNewCardSave.addEventListener('submit', () => {popupWithFormClass.setEventListenersForm()});
-newCardPopup.addEventListener('click', () => {popupClass.setEventListeners(newCardPopup)});
-popupImgOpen.addEventListener('click', () => {popupClass.setEventListeners(popupImgOpen)});
-profilePopup.addEventListener('click', () => {popupClass.setEventListeners(profilePopup)});

@@ -4,10 +4,12 @@ export class Section {
         this._renderer = renderer;
         this._sectionElements = sectionElements;
     }
+
     renderer() {
         this._items.forEach(item => this._renderer(item))
     }
-    addItem(element) {
-        document.querySelector(this._sectionElements).append(element);
+    
+    addItem(cardElement) {
+        document.querySelector(this._sectionElements).append(cardElement);
     }
 }
