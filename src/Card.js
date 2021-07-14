@@ -1,9 +1,11 @@
-export class Card {
-    constructor(name, link, cardSelector, openPopup) {
+import { PopupWithImage } from "./PopupWithImage.js";
+
+export class Card extends PopupWithImage {
+    constructor(name, link, cardSelector) {
+        super();
         this._name = name;
         this._link = link;
         this._cardSelector = cardSelector;
-        this._openPopup = openPopup;
     }
 
     //Добавление карточек из массива
@@ -18,17 +20,17 @@ export class Card {
 
     _getTemplate() {
         const element = document
-        .querySelector(this._cardSelector)
-        .content
-        .querySelector('.element')
-        .cloneNode(true);
+            .querySelector(this._cardSelector)
+            .content
+            .querySelector('.element')
+            .cloneNode(true);
         return element;
     }
 
     _setEventListeners() {
         this._element.querySelector('.element__group').addEventListener('click', this._likeCard); //обработчик события лайка
         this._element.querySelector('.element__delete').addEventListener('click', this._deleteCard); //обработчик события удаления
-        this._element.querySelector('.element__img').addEventListener('click', this._openedCard); //обработчик события открытия в большом размере
+        this._element.querySelector('.element__img').addEventListener('click', this._handleCardClick); //обработчик события открытия в большом размере
     }
 
     //функция лайка
@@ -42,10 +44,7 @@ export class Card {
     }
 
     //Открытие карточки
-    _openedCard = () => {
-        this._openPopup(document.querySelector('.popup_img'));
-        document.querySelector('.popup__img').alt = this._name;
-        document.querySelector('.popup__title').textContent = this._name;
-        document.querySelector('.popup__img').src = this._link;
+    _handleCardClick = () => {
+        super.handleCardClick();
     }
 }

@@ -5,43 +5,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="pages/index.css">
+    <!-- <link rel="stylesheet" href="pages/index.css"> -->
     <title>Место</title>
 </head>
 
 <body class="page">
     <header class="header">
-        <img class="header__logo" src="./images/logo.svg" alt="Логотип">
+        <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="Логотип">
     </header>
     <main class="main">
         <section class="profile">
             <div class="profile__block">
-                <img src="./images/image.png" class="profile__jack" alt="Жак-Ив_Кусто">
+                <img src="<%=require('./images/image.png')%>" class="profile__jack" alt="Жак-Ив_Кусто">
                 <div class="profile__info">
                     <div class="profile__title-button">
                         <h1 class="profile__title">Жак-Ив Кусто</h1>
                         <button type="button" class="profile__edit-button">
-                            <img class="profile__edit" src="./images/EditButton.svg" alt="Редактировать">
+                            <img class="profile__edit" src="<%=require('./images/EditButton.svg')%>" alt="Редактировать">
                         </button>
                     </div>
                     <p class="profile__subtitle">Исследователь океана</p>
                 </div>
             </div>
             <button type="button" class="profile__vector-button">
-                <img src="./images/Vector.svg" class="profile__vector" alt="Плюс">
+                <img src="<%=require('./images/Vector.svg')%>" class="profile__vector" alt="Плюс">
             </button>
         </section>
         <section class="elements">
             <template id="tmplt">
                 <article class="element">
                     <button type="button" class="element__delete">
-                        <img src="./images/delete.svg" class="element__img-delete" atl="Удалить">
+                        <img src="<%=require('./images/delete.svg')%>" class="element__img-delete" atl="Удалить">
                     </button>
-                    <img src="./images/kirill-pershin-1088404-unsplash.png" class="element__img" alt="Картинка">
+                    <img src="<%=require('./images/kirill-pershin-1088404-unsplash.png')%>" class="element__img" alt="Картинка">
                     <div class="element__block">
                         <h2 class="element__title"></h2>
                         <button type="button" class="element__like-btn">
-                            <img src="./images/Group.svg" class="element__group" alt="Лайк">
+                            <img src="<%=require('./images/Group.svg')%>" class="element__group" alt="Лайк">
                         </button>
                     </div>
                 </article>
@@ -55,9 +55,9 @@
     <div class="popup popup_img">
         <div class="popup__container popup__container_img">
             <button type="button" class="popup__close popup__close_img">
-                <img src="./images/CloseIcon.svg" alt="Крестик">
+                <img src="<%=require('./images/CloseIcon.svg')%>" alt="Крестик">
             </button>
-            <img src="./images/kirill-pershin-1088404-unsplash.png" class="popup__img" alt="фото">
+            <img src="<%=require('./images/kirill-pershin-1088404-unsplash.png')%>" class="popup__img" alt="фото">
             <h2 class="popup__title"></h2>
         </div>
     </div>
@@ -66,7 +66,7 @@
         <!-- <template id="template-popup"> -->
         <div class="popup__container popup__container_profile">
             <button type="button" class="popup__close popup__close_profile">
-                <img src="./images/CloseIcon.svg" alt="Крестик">
+                <img src="<%=require('./images/CloseIcon.svg')%>" alt="Крестик">
             </button>
             <form class="form" action="#" name="formRedactProfile" novalidate>
                 <h3 class="form__title">Редактировать профиль</h3>
@@ -84,7 +84,7 @@
 
         <div class="popup__container popup__container_images">
             <button type="button" class="popup__close popup__close_images">
-                <img src="./images/CloseIcon.svg" alt="Крестик">
+                <img src="<%=require('./images/CloseIcon.svg')%>" alt="Крестик">
             </button>
             <form class="form form_append" action="#" name="formNewCard" novalidate>
                 <h3 class="form__title">Новое место</h3>
@@ -97,10 +97,7 @@
             </form>
         </div>
     </div>
-    <script type="module" src="./scripts/index.js"></script>
-    <!-- <script type="module" src="./scripts/FormValidator.js"></script>
-    <script type="module" src="./scripts/Card.js"></script> -->
-
+    <!-- <script type="module" src="./scripts/index.js"></script> -->
 </body>
 
 </html>
