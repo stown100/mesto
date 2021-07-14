@@ -1,11 +1,11 @@
 import '../pages/index.css'
 
-import { FormValidator } from "./FormValidator.js";
-import { Card } from "./Card.js";
-import { Section } from "./Section.js";             //8
-import { PopupWithImage } from "./PopupWithImage.js"; //8
-import { PopupWithForm } from "./PopupWithForm.js" //8
-import { UserInfo } from "./UserInfo.js"           //8
+import { FormValidator } from "./components/FormValidator.js";
+import { Card } from "./components/Card.js";
+import { Section } from "./components/Section.js";             //8
+import { PopupWithImage } from "./components/PopupWithImage.js"; //8
+import { PopupWithForm } from "./components/PopupWithForm.js" //8
+import { UserInfo } from "./components/UserInfo.js"           //8
 const configValidation = {
     formSelector: '.form',
     inputSelector: '.form__input',
