@@ -26,7 +26,7 @@ export class Popup {
     //Закрытие попапов через ESC
     _handleEscClose(evt) {
         if (evt.key === 'Escape') {
-            this.close();
+            this.close(document.querySelector('.popup_opened'));
             console.log('esc')
         }
     }

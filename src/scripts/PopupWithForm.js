@@ -8,7 +8,7 @@ export class PopupWithForm extends Popup {
 
     setEventListenersForm() {
         super.setEventListeners();
-        super.open();
+        super.open(document.querySelector('.popup_images'));
         document.querySelector('.popup_images').addEventListener('submit', (evt) => {
             evt.preventDefault();
             this._saveNewCard();
