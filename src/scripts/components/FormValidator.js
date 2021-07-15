@@ -14,11 +14,11 @@ export class FormValidator {
 
   _handleFormInput() {
     this._inputList = Array.from(this._formSelector.querySelectorAll(this._configValidation.inputSelector));
-    this._setSubmitButtonState();
+    this.setSubmitButtonState();
     this._inputList.forEach((_input) => {
       _input.addEventListener("input", () => {
         this._setCastomError(_input);
-        this._setSubmitButtonState();
+        this.setSubmitButtonState();
       });
     });
   }
@@ -47,7 +47,7 @@ export class FormValidator {
     const span = this._formSelector.querySelector(`#${input.id}-error`);
   }
 
-  _setSubmitButtonState() {
+  setSubmitButtonState() {
     this._button = this._formSelector.querySelector(this._configValidation.submitButtonSelector);
     const isValid = this._formSelector.checkValidity();
     if (isValid) {

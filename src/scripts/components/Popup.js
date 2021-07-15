@@ -1,24 +1,26 @@
 export class Popup {
     constructor(popup) {
-        this._popup = popup;
+        // this._popup = popup;
+        this._popup = document.querySelector('.popup');
+        this._handleEscClose = this._handleEscClose.bind(this);
     }
     //Функция открытия попапа
-    open(popup) {
-        popup.classList.add('popup_opened');
-        document.addEventListener('keydown', this._handleEscClose.bind(this));
+    open() {
+        this._popup.classList.add('popup_opened');
+        document.addEventListener('keydown', this._handleEscClose);
     }
     //Функция закрытия попапа
-    close(popup) {
-        popup.classList.remove('popup_opened');
-        document.removeEventListener('keydown', this._handleEscClose.bind(this));
+    close() {
+        this._popup.classList.remove('popup_opened');
+        document.removeEventListener('keydown', this._handleEscClose);
         console.log('закрыл')
 
     }
     //закрытие кликом на оверлей
-    setEventListeners(popup) {
-        popup.addEventListener('click', (evt) => {
+    setEventListeners() {
+        this._popup.addEventListener('click', (evt) => {
             if (evt.target === evt.currentTarget) {
-                popup.classList.remove('popup_opened');
+                this._popup.classList.remove('popup_opened');
                 console.log('клик')
             }
         })
