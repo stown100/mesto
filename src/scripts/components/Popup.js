@@ -1,7 +1,8 @@
 export class Popup {
-    constructor(popup) {
-        // this._popup = popup;
+    constructor(name, link) {
         this._popup = document.querySelector('.popup');
+        this._name = name;
+        this._link = link;
         this._handleEscClose = this._handleEscClose.bind(this);
     }
     //Функция открытия попапа
@@ -13,15 +14,12 @@ export class Popup {
     close() {
         this._popup.classList.remove('popup_opened');
         document.removeEventListener('keydown', this._handleEscClose);
-        console.log('закрыл')
-
     }
     //закрытие кликом на оверлей
     setEventListeners() {
         this._popup.addEventListener('click', (evt) => {
             if (evt.target === evt.currentTarget) {
-                this._popup.classList.remove('popup_opened');
-                console.log('клик')
+                this.close();
             }
         })
     }
@@ -29,7 +27,6 @@ export class Popup {
     _handleEscClose(evt) {
         if (evt.key === 'Escape') {
             this.close(document.querySelector('.popup_opened'));
-            console.log('esc')
         }
     }
 }

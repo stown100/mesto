@@ -1,7 +1,7 @@
 import { Popup } from "./Popup.js";
 export class PopupWithForm extends Popup {
     constructor(popup, saveNewCard) {
-        super();
+        super(popup);
         this._popup = document.querySelector('.popup_images');
         this._saveNewCard = saveNewCard;
     }
@@ -9,7 +9,7 @@ export class PopupWithForm extends Popup {
     setEventListenersForm() {
         super.setEventListeners();
         super.open(this._popup);
-        document.querySelector('.popup_images').addEventListener('submit', (evt) => {
+        this._popup.addEventListener('submit', (evt) => {
             evt.preventDefault();
             this._saveNewCard();
         });
@@ -17,7 +17,7 @@ export class PopupWithForm extends Popup {
 
     close() {
         super.close(this._popup);
-        document.querySelector('.form_append').reset();
+        this._popup.querySelector('.form_append').reset();
     }
 }
 

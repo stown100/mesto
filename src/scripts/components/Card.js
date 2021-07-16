@@ -1,11 +1,9 @@
-import { PopupWithImage } from "./PopupWithImage.js";
-
-export class Card extends PopupWithImage {
-    constructor(name, link, cardSelector) {
-        super();
+export class Card {
+    constructor(name, link, cardSelector, handleCardClick) {
         this._name = name;
         this._link = link;
         this._cardSelector = cardSelector;
+        this._handleCardClick = handleCardClick
     }
 
     //Добавление карточек из массива
@@ -30,7 +28,8 @@ export class Card extends PopupWithImage {
     _setEventListeners() {
         this._element.querySelector('.element__group').addEventListener('click', this._likeCard); //обработчик события лайка
         this._element.querySelector('.element__delete').addEventListener('click', this._deleteCard); //обработчик события удаления
-        this._element.querySelector('.element__img').addEventListener('click', this._handleCardClick); //обработчик события открытия в большом размере
+        this._element.querySelector('.element__img').addEventListener('click', () => { 
+            this._handleCardClick() }); //обработчик события открытия в большом размере
     }
 
     //функция лайка
@@ -43,8 +42,8 @@ export class Card extends PopupWithImage {
         evt.target.closest('.element').remove();
     }
 
-    //Открытие карточки
-    _handleCardClick = () => {
-        super.handleCardClick();
-    }
+    // //Открытие карточки
+    // _handleCardClick = () => {
+    //     super.handleCardClick();
+    // }
 }
