@@ -19,10 +19,11 @@ import { Popup } from './components/Popup';
 
 const popupClass = new Popup(profilePopup);
 const userInfoClass = new UserInfo(profileTitle, profileSubtitle);
-const popupWithImageClass = new PopupWithImage(popupImgOpen); //Какие данные должны приходить, чтоб карточка открывалась?
+const popupWithImageClass = new PopupWithImage(popupImgOpen, { items: initialCards }); //Какие данные должны приходить, чтоб карточка открывалась?
 const popupWithFormClass = new PopupWithForm(newCardPopup, saveNewCard);
 const sectionClass = new Section({ items: initialCards, renderer: addCard }, sectionElements);
 sectionClass.renderItems();
+console.log(popupWithImageClass)
 
 formList.forEach((formSelector) => {
     const validation = new FormValidator(configValidation, formSelector);
@@ -30,15 +31,18 @@ formList.forEach((formSelector) => {
 });
 function addCard(item) {
     const card = new Card(item.name, item.link, cardSelector, () => {
-        popupWithImageClass.handleCardClick(item.name, item.link)});             //Какие данные должны приходить, чтоб карточка открывалась?
+        popupWithImageClass.open(item.name, item.link)
+    });             //Какие данные должны приходить, чтоб карточка открывалась?
     const cardElement = card.createCard();
     sectionClass.addItem(cardElement);
 }
 
 //Закрытие второго попапа(Добавление карточек с кнопки)
-function saveNewCard() {
-    const card = new Card(inputTitleAppend.value, inputLinkAppend.value, cardSelector, () => {popupWithImageClass.open(popupImgOpen)});
-    const cardElement = card.createCard();  //Скинул гит без константы и prepend
+function saveNewCard(name, link) {
+    const card = new Card(inputTitleAppend.value, inputLinkAppend.value, cardSelector, () => {
+        popupWithImageClass.open(inputTitleAppend.value, inputLinkAppend.value)
+    });
+    const cardElement = card.createCard();
     document.querySelector(sectionElements).prepend(cardElement);                   //добавляем новую карточку в начало таблицы
     popupWithFormClass.close(newCardPopup);                            //Закрываем попап после добавления карточки
     formList.forEach((formSelector) => {                               //блокируем кнопку при сохранении
@@ -52,7 +56,7 @@ editBtn.addEventListener('click', () => { userInfoClass.getUserInfo(), popupClas
 buttonClosePopupProfile.addEventListener('click', () => { popupClass.close(profilePopup) });
 buttonClosePopupCard.addEventListener('click', () => { popupWithFormClass.close(newCardPopup) });
 buttonClosePopupImg.addEventListener('click', () => popupWithImageClass.close());
-popupSaveProfile.addEventListener('submit', () => {userInfoClass.setUserInfo(), popupClass.close()});
+popupSaveProfile.addEventListener('submit', () => { userInfoClass.setUserInfo(), popupClass.close() });
 buttonOpenPopupCard.addEventListener('click', () => { popupWithFormClass.open(newCardPopup) });
 popupWithFormClass.setEventListeners(newCardPopup);
 popupWithImageClass.setEventListeners(popupImgOpen);

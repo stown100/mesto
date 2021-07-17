@@ -41,9 +41,4 @@ export class Card {
     _deleteCard = (evt) => {
         evt.target.closest('.element').remove();
     }
-
-    // //Открытие карточки
-    // _handleCardClick = () => {
-    //     super.handleCardClick();
-    // }
 }
