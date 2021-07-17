@@ -1,8 +1,6 @@
 export class Popup {
-    constructor(name, link) {
-        this._popup = document.querySelector('.popup');
-        this._name = name;
-        this._link = link;
+    constructor(popup) {
+        this._popup = popup;
         this._handleEscClose = this._handleEscClose.bind(this);
     }
     //Функция открытия попапа

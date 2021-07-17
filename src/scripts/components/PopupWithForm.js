@@ -2,16 +2,14 @@ import { Popup } from "./Popup.js";
 export class PopupWithForm extends Popup {
     constructor(popup, saveNewCard) {
         super(popup);
-        this._popup = document.querySelector('.popup_images');
         this._saveNewCard = saveNewCard;
     }
 
-    setEventListenersForm() {
-        super.setEventListeners();
-        super.open(this._popup);
+    setEventListeners() {
+        super.setEventListeners(this._popup);
         this._popup.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            this._saveNewCard();
+            this._saveNewCard(this._getInputValues());
         });
     }
 
@@ -19,18 +17,11 @@ export class PopupWithForm extends Popup {
         super.close(this._popup);
         this._popup.querySelector('.form_append').reset();
     }
-}
 
-    // _getInputValues() {
-    //     // document.querySelector('.form__input_type_title').value = document.querySelector('.form__input_type_title').textContent;
-    //     // document.querySelector('.form__input_type_link').value = document.querySelector('.form__input_type_link').textContent;
-    // }
-                            //Не могу понять, как применить этот метод
-    // _getInputValues() {
-    //     this._inputSelectors = document.querySelector('.form').querySelectorAll('.form__input');
-    //     this._inputObj = {}
-    //     this._inputSelectors.forEach((input) => {
-    //         this._inputObj.value = input.textContent
-    //     })
-    //     return this._inputObj
-    // }
+    _getInputValues() {
+        this._inputList = document.querySelector('.form').querySelectorAll('.popup__input');
+        this._formValues = {};
+        this._inputList.forEach(input => this._formValues[input.name] = input.value);
+        return this._formValues;
+    }
+}

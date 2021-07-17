@@ -7,6 +7,8 @@ export const configValidation = {
     errorClass: 'form__input'
 }
 
+export const profileTitle = document.querySelector('.profile__title');
+export const profileSubtitle = document.querySelector('.profile__subtitle');
 export const popup = '.popup';                      //8
 export const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
 export const editBtn = document.querySelector('.profile__edit-button');
