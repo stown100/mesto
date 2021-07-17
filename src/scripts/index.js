@@ -23,7 +23,6 @@ const popupWithImageClass = new PopupWithImage(popupImgOpen, { items: initialCar
 const popupWithFormClass = new PopupWithForm(newCardPopup, saveNewCard);
 const sectionClass = new Section({ items: initialCards, renderer: addCard }, sectionElements);
 sectionClass.renderItems();
-console.log(popupWithImageClass)
 
 formList.forEach((formSelector) => {
     const validation = new FormValidator(configValidation, formSelector);
