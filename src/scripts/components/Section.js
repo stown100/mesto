@@ -10,6 +10,6 @@ export class Section {
     }
 
     addItem(cardElement) {
-        document.querySelector(this._sectionElements).append(cardElement);
+        document.querySelector(this._sectionElements).prepend(cardElement);
     }
 }

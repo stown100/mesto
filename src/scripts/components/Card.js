@@ -1,9 +1,9 @@
 export class Card {
-    constructor(name, link, cardSelector, handleCardClick) {
+    constructor(name, link, cardSelector, open) {
         this._name = name;
         this._link = link;
         this._cardSelector = cardSelector;
-        this._handleCardClick = handleCardClick
+        this._open = open;
     }
 
     //Добавление карточек из массива
@@ -29,7 +29,7 @@ export class Card {
         this._element.querySelector('.element__group').addEventListener('click', this._likeCard); //обработчик события лайка
         this._element.querySelector('.element__delete').addEventListener('click', this._deleteCard); //обработчик события удаления
         this._element.querySelector('.element__img').addEventListener('click', () => { 
-            this._handleCardClick() }); //обработчик события открытия в большом размере
+            this._open() }); //обработчик события открытия в большом размере
     }
 
     //функция лайка

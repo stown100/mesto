@@ -6,23 +6,19 @@ export const configValidation = {
     inputErrorClass: 'form__input-border-error',
     errorClass: 'form__input'
 }
-
+export const editProfileForm = document.querySelector('.form[name = "formRedactProfile"]')
+export const editNewCardForm = document.querySelector('.form[name = "formNewCard"]')
 export const profileTitle = document.querySelector('.profile__title');
 export const profileSubtitle = document.querySelector('.profile__subtitle');
-export const popup = '.popup';                      //8
-export const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
+// export const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
 export const editBtn = document.querySelector('.profile__edit-button');
 export const profilePopup = document.querySelector('.popup_profile');
 export const buttonClosePopupProfile = document.querySelector('.popup__close_profile');
 export const nameInput = document.querySelector('.form__input_type_name');
 export const jobInput = document.querySelector('.form__input_type_role');
-export const popupSaveProfile = document.querySelector('.popup__container_profile');
 export const buttonOpenPopupCard = document.querySelector('.profile__vector-button');
 export const newCardPopup = document.querySelector('.popup_images');
 export const buttonClosePopupCard = document.querySelector('.popup__close_images');
-export const popupNewCardSave = document.querySelector('.popup__container_images');
-export const inputTitleAppend = document.querySelector('.form__input_type_title');
-export const inputLinkAppend = document.querySelector('.form__input_type_link');
 export const sectionElements = '.elements';
 export const popupImgOpen = document.querySelector('.popup_img');
 export const buttonClosePopupImg = document.querySelector('.popup__close_img');
