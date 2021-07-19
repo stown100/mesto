@@ -13,15 +13,12 @@ export const profileSubtitle = document.querySelector('.profile__subtitle');
 // export const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
 export const editBtn = document.querySelector('.profile__edit-button');
 export const profilePopup = document.querySelector('.popup_profile');
-export const buttonClosePopupProfile = document.querySelector('.popup__close_profile');
 export const nameInput = document.querySelector('.form__input_type_name');
 export const jobInput = document.querySelector('.form__input_type_role');
 export const buttonOpenPopupCard = document.querySelector('.profile__vector-button');
 export const newCardPopup = document.querySelector('.popup_images');
-export const buttonClosePopupCard = document.querySelector('.popup__close_images');
 export const sectionElements = '.elements';
 export const popupImgOpen = document.querySelector('.popup_img');
-export const buttonClosePopupImg = document.querySelector('.popup__close_img');
 export const cardSelector = '#tmplt';
 export const initialCards = [
     {

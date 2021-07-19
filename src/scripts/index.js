@@ -3,10 +3,10 @@ import {
     editProfileForm, editNewCardForm,
     profileTitle, profileSubtitle,
     configValidation,
-    editBtn, profilePopup, buttonClosePopupProfile,
+    editBtn, profilePopup,
     nameInput, jobInput,
-    buttonOpenPopupCard, newCardPopup, buttonClosePopupCard,
-    sectionElements, popupImgOpen, buttonClosePopupImg,
+    buttonOpenPopupCard, newCardPopup,
+    sectionElements, popupImgOpen,
     cardSelector, initialCards,
 } from './utils/constants';
 import { FormValidator } from "./components/FormValidator.js";
@@ -17,13 +17,14 @@ import { PopupWithForm } from "./components/PopupWithForm.js" //8
 import { UserInfo } from "./components/UserInfo.js"           //8
 
 const userInfoClass = new UserInfo(profileTitle, profileSubtitle);
-const editProfilePopup = new PopupWithForm(profilePopup, () => { 
-    userInfoClass.setUserInfo(nameInput.value, jobInput.value)
+const editProfilePopup = new PopupWithForm(profilePopup, (inputValues) => { 
+    userInfoClass.setUserInfo(inputValues.name, inputValues.role)
+    console.log(inputValues.role)
     editProfilePopup.close(profilePopup) })//Сохранения попапа редактирования профиля
 
 const popupWithImageClass = new PopupWithImage(popupImgOpen);
 const addCardPopup = new PopupWithForm(newCardPopup, (inputValues) => {
-    addCard( {name: inputValues.title, link: inputValues.link} ) //ревью
+    addCard( {name: inputValues.title, link: inputValues.link} )
     addCardPopup.close(newCardPopup);
     addCardFormValidator.setSubmitButtonState();
 });
@@ -51,9 +52,6 @@ editBtn.addEventListener('click', () => {
     nameInput.value = currentUserInfo.name;
     jobInput.value = currentUserInfo.role; editProfilePopup.open()
 });                                 //Открытие попапа редактирования профиля
-buttonClosePopupProfile.addEventListener('click', () => { editProfilePopup.close(profilePopup) });
-buttonClosePopupCard.addEventListener('click', () => { addCardPopup.close(newCardPopup) });
-buttonClosePopupImg.addEventListener('click', () => { popupWithImageClass.close() });
 buttonOpenPopupCard.addEventListener('click', () => { addCardPopup.open(newCardPopup) });
 addCardPopup.setEventListeners(newCardPopup);
 popupWithImageClass.setEventListeners(popupImgOpen);

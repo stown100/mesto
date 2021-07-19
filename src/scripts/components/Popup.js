@@ -15,6 +15,9 @@ export class Popup {
     }
     //закрытие кликом на оверлей
     setEventListeners() {
+        this._popup.querySelector('.popup__close').addEventListener('click', () => {
+            this.close()
+        })                      //Закрытие попапа на крестик
         this._popup.addEventListener('click', (evt) => {
             if (evt.target === evt.currentTarget) {
                 this.close();
