@@ -8,6 +8,7 @@ export const configValidation = {
 }
 export const editProfileForm = document.querySelector('.form[name = "formRedactProfile"]')
 export const editNewCardForm = document.querySelector('.form[name = "formNewCard"]')
+export const popupAvatar = document.querySelector('.popup_avatar');
 export const profileTitle = document.querySelector('.profile__title');
 export const profileSubtitle = document.querySelector('.profile__subtitle');
 // export const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
