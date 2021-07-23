@@ -44,7 +44,6 @@ export class FormValidator {
   _hideError(input) {
     this._setFieldError(input);
     input.classList.remove(this._configValidation.inputErrorClass);
-    const span = this._formSelector.querySelector(`#${input.id}-error`);
   }
 
   setSubmitButtonState() {

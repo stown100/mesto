@@ -6,9 +6,13 @@ export const configValidation = {
     inputErrorClass: 'form__input-border-error',
     errorClass: 'form__input'
 }
+
+export const editDeledeForm = document.querySelector('.form[name = "formDeleteCard"]')
+export const editAvatarForm = document.querySelector('.form[name = "formRedactAvatar"]') //9
 export const editProfileForm = document.querySelector('.form[name = "formRedactProfile"]')
 export const editNewCardForm = document.querySelector('.form[name = "formNewCard"]')
-export const popupAvatar = document.querySelector('.popup_avatar');
+export const popupDeleteCard = document.querySelector('.popup_delete'); //9
+export const popupAvatar = document.querySelector('.popup_avatar');  //9
 export const profileTitle = document.querySelector('.profile__title');
 export const profileSubtitle = document.querySelector('.profile__subtitle');
 // export const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
@@ -21,6 +25,7 @@ export const newCardPopup = document.querySelector('.popup_images');
 export const sectionElements = '.elements';
 export const popupImgOpen = document.querySelector('.popup_img');
 export const cardSelector = '#tmplt';
+export const avatarInput = document.querySelector('.form__input_type_avatar'); //9
 export const initialCards = [
     {
         name: 'Nissan Silvia s13',

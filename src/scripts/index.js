@@ -1,9 +1,9 @@
 import '../pages/index.css'
 import {
-    editProfileForm, editNewCardForm, popupAvatar,
-    profileTitle, profileSubtitle,
-    configValidation,
-    editBtn, profilePopup,
+    editAvatarForm, editProfileForm, editNewCardForm, 
+    popupAvatar, profileTitle, profileSubtitle,
+    configValidation, avatarInput, editDeledeForm,
+    editBtn, profilePopup, popupDeleteCard,
     nameInput, jobInput,
     buttonOpenPopupCard, newCardPopup,
     sectionElements, popupImgOpen,
@@ -25,16 +25,22 @@ const apiClass = new Api({                   //9
       'Content-Type': 'application/json'
     }
   });
-  console.log(apiClass)
 
-const avatarClass = new Avatar(popupAvatar, (inputValues) => {   //9
-    avatarClass.setEventListeners(inputValues.link);
-    avatarClass.close(popupAvatar)
+const avatarClass = new Avatar(avatarInput)
+const editAvatarPopup = new PopupWithForm(popupAvatar, (inputValues) => {   //9  Сделать сохранение аватара
+    // submitAvatarForm()
+    editAvatarPopup.close(popupAvatar)
+    addCardFormValidator.setSubmitButtonState();
 })
-console.log(avatarClass)
-document.querySelector('.profile__redact-img').addEventListener('click', () => { //9
-    avatarClass.open(popupAvatar)
-})
+const editDeletePopup = new PopupWithForm(popupDeleteCard)
+
+// const submitAvatarForm = (body, link, url) => {
+//     return sendUserInfoRequest(body, link).then(() => {
+//       userInfo.avatar.style.backgroundImage = `url(${url})`;
+//       avatarFormValidator.removeEventListeners();
+//     });
+//   };
+//   const addAvatarFormValidator = () => avatarFormValidator.openEvents(false);
 
 const userInfoClass = new UserInfo(profileTitle, profileSubtitle);
 const editProfilePopup = new PopupWithForm(profilePopup, (inputValues) => { 
@@ -47,6 +53,9 @@ const addCardPopup = new PopupWithForm(newCardPopup, (inputValues) => {
     addCardPopup.close(newCardPopup);
     addCardFormValidator.setSubmitButtonState();
 });                                         //Добавление новой карточки
+
+const avatarFormValidator = new FormValidator(configValidation, editAvatarForm)
+avatarFormValidator.enableValidation();  //Валидация формы редактирования аватара
 
 const profileFormValidator = new FormValidator(configValidation, editProfileForm);
 profileFormValidator.enableValidation(); //Валидация формы редактирования профиля
@@ -86,7 +95,14 @@ editBtn.addEventListener('click', () => {
 });                                 //Открытие попапа редактирования профиля
 buttonOpenPopupCard.addEventListener('click', () => {
      addCardPopup.open(newCardPopup) });
+document.querySelector('.profile__redact-img').addEventListener('click', () => { //9
+    editAvatarPopup.open(popupAvatar);
+});
+document.querySelector('.element__delete').addEventListener('click', () => {
+    editDeletePopup.open(popupDeleteCard)
+})
 addCardPopup.setEventListeners(newCardPopup);
 popupWithImageClass.setEventListeners(popupImgOpen);
 editProfilePopup.setEventListeners(profilePopup);
-avatarClass.setEventListeners(popupAvatar);   //9
+editAvatarPopup.setEventListeners(popupAvatar);   //9
+editDeletePopup.setEventListeners(popupDeleteCard)

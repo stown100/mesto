@@ -1,16 +1,14 @@
-import { Popup } from "./Popup";
+import { PopupWithForm } from "./PopupWithForm";
 
-export class Avatar extends Popup{
+export class Avatar extends PopupWithForm{
     constructor(popup, saveAvatar) {
         super(popup);
         this._saveAvatar = saveAvatar;
     }
 
     setEventListeners() {
-        console.log('lol1')
         super.setEventListeners(this._popup);
         this._popup.addEventListener('submit', (evt) => {
-            console.log('lol')
             evt.preventDefault();
             this._saveAvatar(this._getInputValues());
         });

@@ -27,9 +27,12 @@ export class Card {
 
     _setEventListeners() {
         this._element.querySelector('.element__group').addEventListener('click', this._likeCard); //обработчик события лайка
-        this._element.querySelector('.element__delete').addEventListener('click', this._deleteCard); //обработчик события удаления
+        document.querySelector('.form__button-delete').addEventListener('click', this._deleteCard); //обработчик события удаления
         this._element.querySelector('.element__img').addEventListener('click', () => { 
             this._open() }); //обработчик события открытия в большом размере
+            // document.querySelector('.element__delete').addEventListener('click', () => {
+            //     editDeletePopup.open(popupDeleteCard)
+            // })
     }
 
     //функция лайка
