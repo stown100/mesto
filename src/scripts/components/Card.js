@@ -1,9 +1,10 @@
 export class Card {
-    constructor(name, link, cardSelector, open) {
+    constructor(name, link, cardSelector, open, api) {
         this._name = name;
         this._link = link;
         this._cardSelector = cardSelector;
         this._open = open;
+        this._api = api;
     }
 
     //Добавление карточек из массива
@@ -27,9 +28,10 @@ export class Card {
 
     _setEventListeners() {
         this._element.querySelector('.element__group').addEventListener('click', this._likeCard); //обработчик события лайка
-        document.querySelector('.form__button-delete').addEventListener('click', this._deleteCard); //обработчик события удаления
+        // document.querySelector('.form__button-delete').addEventListener('click', this._deleteCard); //обработчик события удаления
         this._element.querySelector('.element__img').addEventListener('click', () => { 
             this._open() }); //обработчик события открытия в большом размере
+        this._element.querySelector('.element__delete').addEventListener('click', this._deleteCard);
             // document.querySelector('.element__delete').addEventListener('click', () => {
             //     editDeletePopup.open(popupDeleteCard)
             // })
@@ -41,7 +43,15 @@ export class Card {
     }
 
     //функция удаления карточки
-    _deleteCard = (evt) => {
-        evt.target.closest('.element').remove();
+    _deleteCard = (id) => {
+        console.log('delete')
+        this._api.deleteTask(id).then(() => {
+            evt.target.closest('.element').remove();
+
+        })
     }
+
+    // _deleteCard = (evt) => {
+    //     evt.target.closest('.element').remove();
+    // }
 }

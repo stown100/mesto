@@ -18,13 +18,21 @@ import { UserInfo } from "./components/UserInfo.js";
 import { Api } from './components/Api';    //9
 import { Avatar } from './components/Avatar';//9
 
-const apiClass = new Api({                   //9
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-26',
+const api = new Api({                   //9
+    url: 'https://mesto.nomoreparties.co/v1/cohort-26/cards',
     headers: {
       authorization: '4187936b-f13d-40c6-aac3-45e4140019db',
       'Content-Type': 'application/json'
     }
   });
+
+  api.getInitialCards().then((res) => {                             //9 Добавил карточки с сервера
+    // debugger
+    const sectionClass = new Section({ items: res, renderer: addCard }, sectionElements, api);
+    sectionClass.renderItems();
+  })
+
+
 
 const avatarClass = new Avatar(avatarInput)
 const editAvatarPopup = new PopupWithForm(popupAvatar, (inputValues) => {   //9  Сделать сохранение аватара
@@ -49,7 +57,10 @@ const editProfilePopup = new PopupWithForm(profilePopup, (inputValues) => {
 
 const popupWithImageClass = new PopupWithImage(popupImgOpen);
 const addCardPopup = new PopupWithForm(newCardPopup, (inputValues) => {
-    addCard( {name: inputValues.title, link: inputValues.link} )
+    // addCard( {name: inputValues.title, link: inputValues.link} )
+    api.addTask({name: inputValues.title, link: inputValues.link});
+    // sectionClass.saveItem({name: inputValues.title, link: inputValues.link});
+    // api.getInitialCards()
     addCardPopup.close(newCardPopup);
     addCardFormValidator.setSubmitButtonState();
 });                                         //Добавление новой карточки
@@ -63,16 +74,17 @@ profileFormValidator.enableValidation(); //Валидация формы ред�
 const addCardFormValidator = new FormValidator(configValidation, editNewCardForm);
 addCardFormValidator.enableValidation(); //Валидация формы добавления карточки
 
-const sectionClass = new Section({ items: initialCards, renderer: addCard }, sectionElements);
-sectionClass.renderItems();
+const sectionClass = new Section({ items: initialCards, renderer: addCard }, sectionElements);  //возможно не нужен
+// sectionClass.renderItems();
 
 function addCard(item) {
     const card = new Card(item.name, item.link, cardSelector, () => {
         popupWithImageClass.open(item.name, item.link)
-    });
+    }, api);
     const cardElement = card.createCard();
-    sectionClass.addItem(cardElement);
-}                                      //Вывод массива на стр.
+    sectionClass.addItem(cardElement);   //Меняю тут addItem на saveItem
+}                                      //Вывод данных на стр.
+
 
 // apiClass.getInitialCards("users/me")                //3. Обратабываю ошибки, попадающие в .catch
 // .then((result) => {
@@ -98,9 +110,9 @@ buttonOpenPopupCard.addEventListener('click', () => {
 document.querySelector('.profile__redact-img').addEventListener('click', () => { //9
     editAvatarPopup.open(popupAvatar);
 });
-document.querySelector('.element__delete').addEventListener('click', () => {
-    editDeletePopup.open(popupDeleteCard)
-})
+// document.querySelector('.element__delete').addEventListener('click', () => {
+//     editDeletePopup.open(popupDeleteCard)
+// })
 addCardPopup.setEventListeners(newCardPopup);
 popupWithImageClass.setEventListeners(popupImgOpen);
 editProfilePopup.setEventListeners(profilePopup);

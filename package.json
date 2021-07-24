@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/stown100/mesto#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "corejs": "^1.0.0"
   },
   "devDependencies": {
