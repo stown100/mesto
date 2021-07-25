@@ -57,17 +57,6 @@ const editAvatarPopup = new PopupWithSubmit(popupAvatar, {
           popupAvatar.close();
           updateUserInfo();
         });
-    //       .editAvatarImage({
-    //         avatar: input["form__input_type_avatar"],
-    //       })
-    //       .then((data) => {
-    //         user.setUserAvatar(data.avatar);
-    //         popupAvatar.renderLoading(false);
-    //         popupAvatar.close();
-    //         console.log(data);
-    //       });
-    //       popupAvatar.renderLoading(true);
-    //   },
     }
   });
 //   console.log(editAvatarPopup)
