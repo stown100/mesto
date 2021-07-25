@@ -35,7 +35,7 @@ export class Api {
     }
 
     //редактирование профиля
-    getUserInfo() {
+    setUserInfo() {
         return fetch(`${this.url}/users/me`, {
             method: 'PATCH',
             headers: this.headers,

@@ -46,21 +46,45 @@ const avatarClass = new Avatar(avatarInput)
 // })
 
 const editAvatarPopup = new PopupWithSubmit(popupAvatar, {
-
+    handleFormSubmit: (input) => {
+        api
+        .setUserAvatar(popupAvatar.getInputValues())
+        .catch((err) => {
+          console.log('Ошибка');
+        })
+        .finally(() => {
+          renderLoadingProfile(false, popupAvatar);
+          popupAvatar.close();
+          updateUserInfo();
+        });
+    //       .editAvatarImage({
+    //         avatar: input["form__input_type_avatar"],
+    //       })
+    //       .then((data) => {
+    //         user.setUserAvatar(data.avatar);
+    //         popupAvatar.renderLoading(false);
+    //         popupAvatar.close();
+    //         console.log(data);
+    //       });
+    //       popupAvatar.renderLoading(true);
+    //   },
+    }
   });
 //   console.log(editAvatarPopup)
 
 const userInfoClass = new UserInfo(profileTitle, profileSubtitle);
-const editProfilePopup = new PopupWithForm(profilePopup, (inputValues) => { 
-    userInfoClass.setUserInfo(inputValues.name, inputValues.role)
-    console.log(inputValues)
-    editProfilePopup.close(profilePopup) })//Сохранения попапа редактирования профиля
-    
-    api.getUserInfo().then(({name, about}) => {   //ДОЛЖНЫ ОБНОВЛЯТЬСЯ ДАННЫЕ
-        debugger
-        console.log('Должны прийти данные данные')
-        userInfoClass.setUserInfo({name: name, about: about})
-      })
+const editProfilePopup = new PopupWithForm(profilePopup, ({name, about}) => { 
+    userInfoClass.setUserInfo({name: name, about: about})
+    console.log(userInfoClass.setUserInfo({name: name, about: about}))
+    editProfilePopup.close(profilePopup)//Сохранения попапа редактирования профиля
+    })
+    api.setUserInfo().then(({name, about}) => {   //ДОЛЖНЫ ОБНОВЛЯТЬСЯ ДАННЫЕ
+        console.log({name, about})
+                console.log('Должны прийти данные данные')
+                userInfoClass.setUserInfo({name: name, about: about})
+                userInfoClass.updataUserInfo();
+              })
+
 
 const popupWithImageClass = new PopupWithImage(popupImgOpen);
 const addCardPopup = new PopupWithForm(newCardPopup, (inputValues) => {
@@ -97,7 +121,7 @@ addCardFormValidator.enableValidation(); //Валидация формы доб�
 editBtn.addEventListener('click', () => {
     const currentUserInfo = userInfoClass.getUserInfo();
     nameInput.value = currentUserInfo.name;
-    jobInput.value = currentUserInfo.role; editProfilePopup.open()
+    jobInput.value = currentUserInfo.about; editProfilePopup.open()
 });                                 //Открытие попапа редактирования профиля
 buttonOpenPopupCard.addEventListener('click', () => {
      addCardPopup.open(newCardPopup) });
