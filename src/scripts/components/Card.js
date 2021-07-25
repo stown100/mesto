@@ -18,12 +18,18 @@ export class Card {
     }
 
     _getTemplate() {
+        // if (owner === true) {
+        //     document.querySelector(".element__delete").style.visibility = "visible";
+        //   } else {
+        //     document.querySelector(".element__delete").style.visibility = "hidden";
+        //   }
         const element = document
             .querySelector(this._cardSelector)
             .content
             .querySelector('.element')
             .cloneNode(true);
         return element;
+        //Сделать проверку, создал карточку я или нет, чтоб установить корзину
     }
 
     _setEventListeners() {
@@ -32,9 +38,6 @@ export class Card {
         this._element.querySelector('.element__img').addEventListener('click', () => { 
             this._open() }); //обработчик события открытия в большом размере
         this._element.querySelector('.element__delete').addEventListener('click', this._deleteCard);
-            // document.querySelector('.element__delete').addEventListener('click', () => {
-            //     editDeletePopup.open(popupDeleteCard)
-            // })
     }
 
     //функция лайка
@@ -43,15 +46,14 @@ export class Card {
     }
 
     //функция удаления карточки
-    _deleteCard = (id) => {
-        console.log('delete')
+    _deleteCard = (id) => {                                         //ДОДЕЛАТЬ УДАЛЕНИЕ
         this._api.deleteTask(id).then(() => {
-            evt.target.closest('.element').remove();
-
+            this._element.remove();
         })
+        .catch(() => {console.log('Что-то сломалось')});
     }
 
-    // _deleteCard = (evt) => {
+    // _deleteCard = (evt) => {                             //Рабочая
     //     evt.target.closest('.element').remove();
     // }
 }

@@ -11,14 +11,15 @@ export class Section {
     }
 
     addItem(cardElement) {
-        document.querySelector(this._sectionElements).append(cardElement);
+        document.querySelector(this._sectionElements).prepend(cardElement);
     }
 
     saveItem = (data) => {
         this._api
         .addTask(data)
         .then((res) => {
-            this.addItem(res.name)
+            this.addItem(res)
         })
+        .catch(() => {console.log('Карточка не добавилась')});
     }
 }
