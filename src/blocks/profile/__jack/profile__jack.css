@@ -1,5 +1,7 @@
 .profile__jack {
     border-radius: 50%;
+    max-width: 120px;
+    min-height: 120px;
 }
 
 @media (min-width: 320px) and (max-width: 580px) {

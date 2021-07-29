@@ -82,13 +82,13 @@ api.getUserInfo().then(({name, about}) => {
 
                                                 //Работа с аватаром
 
-// api.getUserAvatar().then((avatar) => {     //Падает ошибка
-//     console.log(avatar)
-//     // debugger
-//     console.log('Должен прийти аватар');
-//     userInfoClass.setUserAvatar(avatar)
-//     userInfoClass.updataUserAvatar();
-// })
+api.getUserAvatar().then((avatar) => {     //Падает ошибка
+    console.log(avatar)
+    // debugger
+    console.log('Должен прийти аватар');
+    userInfoClass.setUserAvatar({avatar: avatar})
+    userInfoClass.updataUserAvatar();
+})
 const editAvatarPopup = new PopupWithForm(popupAvatar, (avatar) => {
     // debugger
     userInfoClass.setUserAvatar(avatar)

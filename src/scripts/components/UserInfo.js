@@ -26,7 +26,7 @@ export class UserInfo {
         this.about = about;
         // this.avatar = avatar
     }
-    setUserAvatar(avatar) {
+    setUserAvatar({avatar}) {
         this.avatar = avatar
     }
 
