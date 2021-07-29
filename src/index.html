@@ -16,7 +16,7 @@
     <main class="main">
         <section class="profile">
             <div class="profile__block">
-                <li class="profile__redact-image"><img src="" class="profile__jack"
+                <li class="profile__redact-image"><img src="<%=require('./images/image.png')%>" class="profile__jack"
                         alt="Жак-Ив_Кусто"><span class="profile__redact-img"></span></li>
                 <div class="profile__info">
                     <div class="profile__title-button">
@@ -109,9 +109,9 @@
             </button>
             <form class="form" action="#" name="formRedactAvatar" novalidate>
                 <h3 class="form__title">Обновить аватар</h3>
-                <input type="url" id="link" class="form__input form__input_type_avatar" name="avatar"
+                <input type="url" id="avatar" class="form__input form__input_type_avatar" name="avatar"
                     placeholder="ссылка на аватар" required>
-                <span id="link-error" class="form__input-error"></span>
+                <span id="avatar-error" class="form__input-error"></span>
                 <button type="submit" class="form__button" disabled>Сохранить</button>
             </form>
         </div>
