@@ -59,15 +59,15 @@ export class Api {
     }
 
     //замена аватара
-getUserAvatar() {
-    // debugger
-    return fetch(`${this.url}/users/me/avatar`, {
-        // method: 'PATCH',
-        headers: this.headers,
-    })
-        .then(this._handleResponse)
-        .catch(this._catchError);
-}
+// getUserAvatar() {
+//     // debugger
+//     return fetch(`${this.url}/users/me/avatar`, {
+//         // method: 'PATCH',
+//         headers: this.headers,
+//     })
+//         .then(this._handleResponse)
+//         .catch(this._catchError);
+// }
 
     setUserAvatar(avatar) {
         return fetch(`${this.url}/users/me/avatar`, {

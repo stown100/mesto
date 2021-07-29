@@ -1,3 +1,5 @@
+//Не доделал удаление и лайки. Отправляю на всякий случай, чтоб была возможность доделать на каникулах
+
 import '../pages/index.css'
 import {
     editAvatarForm, editProfileForm, editNewCardForm, 
@@ -70,35 +72,24 @@ const editProfilePopup = new PopupWithForm(profilePopup, ({name, about}) => {
         userInfoClass.updataUserInfo();
     })
 })
-console.log(userInfoClass)
-//Прихоодят данные с сервера
-api.getUserInfo().then(({name, about}) => {
-    console.log({name, about})
+
+//Прихоодят данные пользователя
+api.getUserInfo().then(({name, about, avatar}) => {
     console.log('Пришли данные пользователя')
     userInfoClass.setUserInfo({name: name, about: about})
     userInfoClass.updataUserInfo();
+    userInfoClass.setUserAvatar({avatar: avatar})
+    userInfoClass.updataUserAvatar();
   })
   
 
                                                 //Работа с аватаром
-
-api.getUserAvatar().then((avatar) => {     //Падает ошибка
-    console.log(avatar)
-    // debugger
-    console.log('Должен прийти аватар');
-    userInfoClass.setUserAvatar({avatar: avatar})
-    userInfoClass.updataUserAvatar();
-})
 const editAvatarPopup = new PopupWithForm(popupAvatar, (avatar) => {
-    // debugger
     userInfoClass.setUserAvatar(avatar)
     editAvatarPopup.close(popupAvatar)
     api.setUserAvatar(avatar).then((avatar) => {
-        console.log(avatar)
-        // profileAvatar.src = res.avatar
         userInfoClass.setUserAvatar(avatar)
         userInfoClass.updataUserAvatar();
-        console.log(userInfoClass)  //Сюда приходит не ссылка, а обьект с name, about и avatar
     })
     // .finally(() => popupAvatar.renderSave(false));
 })
