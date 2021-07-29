@@ -8,6 +8,7 @@ import {
     buttonOpenPopupCard, newCardPopup,
     sectionElements, popupImgOpen,
     cardSelector, initialCards, buttonDeleteCard,
+    profileAvatar,
 } from './utils/constants';
 import { FormValidator } from "./components/FormValidator.js";
 import { Card } from "./components/Card.js";
@@ -28,76 +29,84 @@ const api = new Api({                   //9
       'Content-Type': 'application/json'
     }
   });
-
-  api.getInitialCards().then((res) => {                             //9 Добавил карточки с сервера
+                                                            //Работа с карточками
+  //Добавления карточек с сервера
+  api.getInitialCards().then((res) => {
     const sectionClass = new Section({ items: res.reverse(), renderer: addCard }, sectionElements, api);
     sectionClass.renderItems();
     console.log('Пришли карточки')
   })
 
-
-const avatarClass = new Avatar(avatarInput)
-// const editAvatarPopup = new PopupWithForm(popupAvatar, (inputValues) => {   //9  Сделать сохранение аватара
-// const avatarClass = new Avatar(avatarInput)
-// debugger
-//     avatarClass.setEventListeners
-//     editAvatarPopup.close(popupAvatar)
-//     addCardFormValidator.setSubmitButtonState();
-// })
-
-const editAvatarPopup = new PopupWithSubmit(popupAvatar, {
-    handleFormSubmit: (input) => {
-        api
-        .setUserAvatar(popupAvatar.getInputValues())
-        .catch((err) => {
-          console.log('Ошибка');
-        })
-        .finally(() => {
-          renderLoadingProfile(false, popupAvatar);
-          popupAvatar.close();
-          updateUserInfo();
-        });
-    }
-  });
-//   console.log(editAvatarPopup)
-
-const userInfoClass = new UserInfo(profileTitle, profileSubtitle);
-const editProfilePopup = new PopupWithForm(profilePopup, ({name, about}) => { 
-    userInfoClass.setUserInfo({name: name, about: about})
-    console.log(userInfoClass.setUserInfo({name: name, about: about}))
-    editProfilePopup.close(profilePopup)//Сохранения попапа редактирования профиля
-    })
-    api.setUserInfo().then(({name, about}) => {   //ДОЛЖНЫ ОБНОВЛЯТЬСЯ ДАННЫЕ
-        console.log({name, about})
-                console.log('Должны прийти данные данные')
-                userInfoClass.setUserInfo({name: name, about: about})
-                userInfoClass.updataUserInfo();
-              })
-
-
-const popupWithImageClass = new PopupWithImage(popupImgOpen);
+  //Добавление новой карточки
 const addCardPopup = new PopupWithForm(newCardPopup, (inputValues) => {
     addCard( {name: inputValues.title, link: inputValues.link} )
     api.addTask({name: inputValues.title, link: inputValues.link});
+    // addCardPopup.renderSaving(true);
     addCardPopup.close(newCardPopup);
     addCardFormValidator.setSubmitButtonState();
-});                                         //Добавление новой карточки
+});
 
 const sectionClass = new Section({ items: initialCards, renderer: addCard }, sectionElements, api);
+const popupWithImageClass = new PopupWithImage(popupImgOpen);
 
 function addCard(item) {
     const card = new Card(item.name, item.link, cardSelector, () => {
         popupWithImageClass.open(item.name, item.link)
     }, api);
     const cardElement = card.createCard();
-    sectionClass.addItem(cardElement);   //Меняю тут addItem на saveItem
+    sectionClass.addItem(cardElement);
 }                                      //Вывод данных на стр.
 
+                                                        //Работа с редактированием профиля
+const userInfoClass = new UserInfo(profileTitle, profileSubtitle, profileAvatar);
+//Сохранение редактирования данных пользователя
+const editProfilePopup = new PopupWithForm(profilePopup, ({name, about}) => {
+    // editProfilePopup.renderSaving(true);
+    userInfoClass.setUserInfo({name: name, about: about})
+    editProfilePopup.close(profilePopup)//Сохранения попапа редактирования профиля
+    //Отправляю данные профиля на сервер
+    api.setUserInfo({name, about}).then(({name, about}) => {
+        userInfoClass.setUserInfo({name: name, about: about})
+        userInfoClass.updataUserInfo();
+    })
+})
+console.log(userInfoClass)
+//Прихоодят данные с сервера
+api.getUserInfo().then(({name, about}) => {
+    console.log({name, about})
+    console.log('Пришли данные пользователя')
+    userInfoClass.setUserInfo({name: name, about: about})
+    userInfoClass.updataUserInfo();
+  })
+  
+
+                                                //Работа с аватаром
+
+// api.getUserAvatar().then((avatar) => {     //Падает ошибка
+//     console.log(avatar)
+//     // debugger
+//     console.log('Должен прийти аватар');
+//     userInfoClass.setUserAvatar(avatar)
+//     userInfoClass.updataUserAvatar();
+// })
+const editAvatarPopup = new PopupWithForm(popupAvatar, (avatar) => {
+    // debugger
+    userInfoClass.setUserAvatar(avatar)
+    editAvatarPopup.close(popupAvatar)
+    api.setUserAvatar(avatar).then((avatar) => {
+        console.log(avatar)
+        // profileAvatar.src = res.avatar
+        userInfoClass.setUserAvatar(avatar)
+        userInfoClass.updataUserAvatar();
+        console.log(userInfoClass)  //Сюда приходит не ссылка, а обьект с name, about и avatar
+    })
+    // .finally(() => popupAvatar.renderSave(false));
+})
+const avatarClass = new Avatar(avatarInput)
 
 
 
-
-
+//Валидации
 const avatarFormValidator = new FormValidator(configValidation, editAvatarForm)
 avatarFormValidator.enableValidation();  //Валидация формы редактирования аватара
 
@@ -106,15 +115,22 @@ profileFormValidator.enableValidation(); //Валидация формы ред�
 
 const addCardFormValidator = new FormValidator(configValidation, editNewCardForm);
 addCardFormValidator.enableValidation(); //Валидация формы добавления карточки
+
 //События
+//Открытие попапа редактирования профиля
 editBtn.addEventListener('click', () => {
     const currentUserInfo = userInfoClass.getUserInfo();
     nameInput.value = currentUserInfo.name;
-    jobInput.value = currentUserInfo.about; editProfilePopup.open()
-});                                 //Открытие попапа редактирования профиля
+    jobInput.value = currentUserInfo.about; 
+    editProfilePopup.open()
+});
+//Открытие попапа добавления карточки
 buttonOpenPopupCard.addEventListener('click', () => {
      addCardPopup.open(newCardPopup) });
-document.querySelector('.profile__redact-img').addEventListener('click', () => { //9
+//9 Открытие попапа смены аватара
+document.querySelector('.profile__redact-img').addEventListener('click', () => {
+    const currentUserAvatar = userInfoClass.getUserAvatar();
+    avatarInput.value = currentUserAvatar.avatar;
     editAvatarPopup.open(popupAvatar);
 });
 // buttonDeleteCard.addEventListener('click', () => {

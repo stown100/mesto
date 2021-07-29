@@ -18,17 +18,12 @@ export class Card {
     }
 
     _getTemplate() {
-        // if (owner === true) {
-        //     document.querySelector(".element__delete").style.visibility = "visible";
-        //   } else {
-        //     document.querySelector(".element__delete").style.visibility = "hidden";
-        //   }
-        const element = document
+        this._element = document
             .querySelector(this._cardSelector)
             .content
             .querySelector('.element')
             .cloneNode(true);
-        return element;
+        return this._element;
         //Сделать проверку, создал карточку я или нет, чтоб установить корзину
     }
 

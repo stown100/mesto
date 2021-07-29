@@ -34,27 +34,46 @@ export class Api {
         // .catch(this._catchError);
     }
 
-    //редактирование профиля
-    setUserInfo() {
+    //Редактирование профиля(получаю данные с сервера)
+    getUserInfo() {
+        return fetch(`${this.url}/users/me`, {
+            // method: 'PATCH',
+            headers: this.headers,
+        })
+        .then(this._handleResponse)
+        .catch(this._catchError);
+    }
+
+    //редактирование профиля(Отправляю данные да серсер)
+    setUserInfo({name, about}) {
         return fetch(`${this.url}/users/me`, {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify({
-                name: 'Stick',
-                about: 'Racer'
+                name,
+                about
             })
         })
         .then(this._handleResponse)
         .catch(this._catchError);
     }
+
     //замена аватара
-    avatarRequest({avatarLink}) {
-        return fetch(`${this._url}/users/me/avatar`, {
+getUserAvatar() {
+    // debugger
+    return fetch(`${this.url}/users/me/avatar`, {
+        // method: 'PATCH',
+        headers: this.headers,
+    })
+        .then(this._handleResponse)
+        .catch(this._catchError);
+}
+
+    setUserAvatar(avatar) {
+        return fetch(`${this.url}/users/me/avatar`, {
             method: 'PATCH',
             headers: this.headers,
-            body: JSON.stringify({
-                avatar: avatarLink,
-            })
+            body: JSON.stringify(avatar)
         })
         .then(this._handleResponse)
         .catch(this._catchError);

@@ -8,9 +8,9 @@ export const configValidation = {
 }
 
 export const editDeledeForm = document.querySelector('.form[name = "formDeleteCard"]');  //9
-export const editAvatarForm = document.querySelector('.form[name = "formRedactAvatar"]') //9
-export const editProfileForm = document.querySelector('.form[name = "formRedactProfile"]')
-export const editNewCardForm = document.querySelector('.form[name = "formNewCard"]')
+export const editAvatarForm = document.querySelector('.form[name = "formRedactAvatar"]'); //9
+export const editProfileForm = document.querySelector('.form[name = "formRedactProfile"]');
+export const editNewCardForm = document.querySelector('.form[name = "formNewCard"]');
 export const popupDeleteCard = document.querySelector('.popup_delete'); //9
 export const popupAvatar = document.querySelector('.popup_avatar');  //9
 export const buttonDeleteCard = document.querySelector('.element__delete'); 
@@ -27,6 +27,7 @@ export const sectionElements = '.elements';
 export const popupImgOpen = document.querySelector('.popup_img');
 export const cardSelector = '#tmplt';
 export const avatarInput = document.querySelector('.form__input_type_avatar'); //9
+export const profileAvatar = document.querySelector('.profile__jack');
 // export const initialCards = [                                           //Возможно не нужен
 //     {
 //         name: 'Nissan Silvia s13',
