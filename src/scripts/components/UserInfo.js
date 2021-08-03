@@ -12,7 +12,6 @@ export class UserInfo {
         return {
             name: this.name,
             about: this.about,
-            // avatar: this.avatar
         }
     }
     getUserAvatar() {
@@ -21,12 +20,9 @@ export class UserInfo {
         }
     }
 
-    setUserInfo({name, about}) {
+    setUserInfo({name, about, avatar}) {
         this.name = name,
         this.about = about;
-        // this.avatar = avatar
-    }
-    setUserAvatar({avatar}) {
         this.avatar = avatar
     }
 
@@ -34,27 +30,8 @@ export class UserInfo {
     updataUserInfo() {
         this._profileName.textContent = this.name;
         this._profileJob.textContent = this.about;
-        // this._profileAvatar = this.avatar
     }
     updataUserAvatar() {
         this._profileAvatar.src = this.avatar
     }
-
-
-
-
-    
-    //БЫЛО
-    // getUserInfo() {
-    //     const userInfo = {
-    //         name: this._profileName.textContent,
-    //         role: this._profileJob.textContent,
-    //     }
-    //     return userInfo
-    // }
-
-    // setUserInfo(name, job) {
-    //     this._profileName.textContent = name;
-    //     this._profileJob.textContent = job;
-    // }
 }

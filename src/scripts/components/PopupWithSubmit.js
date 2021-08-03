@@ -3,40 +3,40 @@ import { Popup } from "./Popup";
 export class PopupWithSubmit extends Popup {
     constructor(popup, handleFormSubmit) {
         super(popup);
-        this._form = this._popup.querySelector(".form");
         this._handleFormSubmit = handleFormSubmit;
+        this._form = this._popup.querySelector(".form");
+        this._buttonSubmit = this._popup.querySelector('.form__button-delete')
       }
-    
-      setOnSubmit = (callback) => {
-        this._handleFormSubmit = callback;
-      };
-    
-      setEventListeners = () => {
-        super.setEventListeners();
-        this._form.addEventListener("submit", (evt) => {
-            evt.preventDefault()
-            this._handleFormSubmit();
-        });
-      };
-    //   constructor(popup, handleFormSubmit) {
-    //     super(popup);
-    //     this._form = this._popup.querySelector(".form");
-    //     this._handleFormSubmit = handleFormSubmit;
-    //   }
-    
-    //   setOnSubmit = (callback) => {
-    //     this._handleFormSubmit = callback;
-    //   };
-    
-    //   setEventListener = () => {
-    //     super.setEventListener();
-    //     this._form.addEventListener("submit", this._handleFormSubmit);
-    //   };
 
-    // setEventListeners() {
-    //     this._popup.addEventListener('submit', (evt) => {
-    //         evt.preventDefault();
-    //         this._saveNewCard();
-    //     });
-    // }
-}
+      setEventListeners() {
+        this._popup.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+            this._handleFormSubmit(); 
+        });
+        super.setEventListeners();
+        }
+
+        setOnSubmit = (callback) => {
+          console.log('close')
+          this._handleFormSubmit = callback;
+        };
+
+        setTextButton(over) {
+          if (over) {
+              this._submitButton.textContent = 'Удаление...'
+          } else {
+              this._submitButton.textContent = 'Ок'
+          }
+      }
+    }      
+
+    
+      // setEventListeners = () => {
+      //   super.setEventListeners(this._popup);
+      //   this._popup.addEventListener("submit", (evt) => {
+      //     console.log('закрываю')
+      //       evt.preventDefault()
+      //       this._handleFormSubmit();
+      //   });
+      // };
+// }

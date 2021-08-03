@@ -19,10 +19,7 @@ import { PopupWithImage } from "./components/PopupWithImage.js";
 import { PopupWithForm } from "./components/PopupWithForm.js";
 import { UserInfo } from "./components/UserInfo.js";
 import { Api } from './components/Api';    //9
-import { Avatar } from './components/Avatar';//9
 import { PopupWithSubmit } from './components/PopupWithSubmit';
-const popupWithSubmitClass = new PopupWithSubmit(popupDeleteCard);
-// console.log(popupWithSubmitClass)
 
 const api = new Api({                   //9
     url: 'https://mesto.nomoreparties.co/v1/cohort-26',
@@ -33,17 +30,19 @@ const api = new Api({                   //9
   });
                                                             //Работа с карточками
   //Добавления карточек с сервера
-  api.getInitialCards().then((res) => {
-    const sectionClass = new Section({ items: res.reverse(), renderer: addCard }, sectionElements, api);
+  api.getInitialCards()
+  .then((res) => {
+    const sectionClass = new Section({ 
+        items: res.reverse(), renderer: addCard }, sectionElements, api);
     sectionClass.renderItems();
     console.log('Пришли карточки')
   })
 
+
   //Добавление новой карточки
 const addCardPopup = new PopupWithForm(newCardPopup, (inputValues) => {
-    addCard( {name: inputValues.title, link: inputValues.link} )
+    addCard( {data: inputValues.title, data: inputValues.link} )
     api.addTask({name: inputValues.title, link: inputValues.link});
-    // addCardPopup.renderSaving(true);
     addCardPopup.close(newCardPopup);
     addCardFormValidator.setSubmitButtonState();
 });
@@ -51,19 +50,46 @@ const addCardPopup = new PopupWithForm(newCardPopup, (inputValues) => {
 const sectionClass = new Section({ items: initialCards, renderer: addCard }, sectionElements, api);
 const popupWithImageClass = new PopupWithImage(popupImgOpen);
 
-function addCard(item) {
-    const card = new Card(item.name, item.link, cardSelector, () => {
-        popupWithImageClass.open(item.name, item.link)
-    }, api);
+function addCard(data) {
+    const card = new Card(data, cardSelector, () => {
+        popupWithImageClass.open(data.name, data.link)
+    },
+    //Открываю попап подтверждения
+    () => {
+        popupWithSubmitClass.open()
+    }, 
+    api);
     const cardElement = card.createCard();
     sectionClass.addItem(cardElement);
 }                                      //Вывод данных на стр.
+
+                                                        //Удаления карточек
+const popupWithSubmitClass = new PopupWithSubmit(popupDeleteCard, deleteCardClick)
+
+const deleteCardClick = (card) => {
+    popupWithSubmitClass.open()
+    popupWithSubmitClass.setOnSubmit(() => {
+    api.deleteTask()
+    .then (() => {
+        popupWithSubmitClass.setTextButton(true)
+      card.deleteCard()
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+    .finally(() => {
+        popupWithSubmitClass.setTextButton(false)
+        popupWithSubmitClass.close()
+    })
+  })
+}
+
+
 
                                                         //Работа с редактированием профиля
 const userInfoClass = new UserInfo(profileTitle, profileSubtitle, profileAvatar);
 //Сохранение редактирования данных пользователя
 const editProfilePopup = new PopupWithForm(profilePopup, ({name, about}) => {
-    // editProfilePopup.renderSaving(true);
     userInfoClass.setUserInfo({name: name, about: about})
     editProfilePopup.close(profilePopup)//Сохранения попапа редактирования профиля
     //Отправляю данные профиля на сервер
@@ -78,23 +104,21 @@ api.getUserInfo().then(({name, about, avatar}) => {
     console.log('Пришли данные пользователя')
     userInfoClass.setUserInfo({name: name, about: about})
     userInfoClass.updataUserInfo();
-    userInfoClass.setUserAvatar({avatar: avatar})
+    userInfoClass.setUserInfo({avatar: avatar})
     userInfoClass.updataUserAvatar();
   })
   
 
                                                 //Работа с аватаром
 const editAvatarPopup = new PopupWithForm(popupAvatar, (avatar) => {
-    userInfoClass.setUserAvatar(avatar)
+    userInfoClass.setUserInfo(avatar)
     editAvatarPopup.close(popupAvatar)
     api.setUserAvatar(avatar).then((avatar) => {
-        userInfoClass.setUserAvatar(avatar)
+        userInfoClass.setUserInfo(avatar)
         userInfoClass.updataUserAvatar();
     })
     // .finally(() => popupAvatar.renderSave(false));
 })
-const avatarClass = new Avatar(avatarInput)
-
 
 
 //Валидации
@@ -131,4 +155,4 @@ addCardPopup.setEventListeners(newCardPopup);
 popupWithImageClass.setEventListeners(popupImgOpen);
 editProfilePopup.setEventListeners(profilePopup);
 editAvatarPopup.setEventListeners(popupAvatar);   //9
-// editDeletePopup.setEventListeners(popupDeleteCard) //9
+popupWithSubmitClass.setEventListeners(popupDeleteCard) //9
