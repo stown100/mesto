@@ -3,8 +3,8 @@ export class PopupWithForm extends Popup {
     constructor(popup, saveNewCard) {
         super(popup);
         this._saveNewCard = saveNewCard;
-        this._buttonSubmit = document.querySelector('.form').querySelector('.form__button');
-        this._buttonSubmitDefaultText = this._buttonSubmit.textContent;
+        this._buttonSubmit = this._popup.querySelector('.form__button');
+        // this._buttonSubmitText = this._buttonSubmit.textContent;
     }
 
     setEventListeners() {
@@ -27,12 +27,11 @@ export class PopupWithForm extends Popup {
         return this._formValues;
     }
 
-    // renderSave(isSaving) {
-    //     debugger
-    //     if (isSaving) {
-    //       this._buttonSubmit.textContent = 'Сохранение...';
-    //     } else {
-    //       this._buttonSubmit.textContent = this._buttonSubmitDefaultText;
-    //     }
-    //   }
+    setButtonText(over) {
+        if (over) {
+            this._buttonSubmit.textContent = 'Сохранение...'
+        } else {
+            this._buttonSubmit.textContent = 'Сохранить'
+        }
+    }
 }

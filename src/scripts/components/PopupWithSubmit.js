@@ -4,39 +4,26 @@ export class PopupWithSubmit extends Popup {
     constructor(popup, handleFormSubmit) {
         super(popup);
         this._handleFormSubmit = handleFormSubmit;
-        this._form = this._popup.querySelector(".form");
-        this._buttonSubmit = this._popup.querySelector('.form__button-delete')
+        this._buttonSubmit = this._popup.querySelector('.form__button');
       }
 
       setEventListeners() {
         this._popup.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            this._handleFormSubmit(); 
+            this._handleFormSubmit(this); 
         });
         super.setEventListeners();
         }
 
-        setOnSubmit = (callback) => {
-          console.log('close')
+        setFormSubmit = (callback) => {
           this._handleFormSubmit = callback;
         };
 
-        setTextButton(over) {
+        setButtonText(over) {
           if (over) {
-              this._submitButton.textContent = 'Удаление...'
+              this._buttonSubmit.textContent = 'Удаление...'
           } else {
-              this._submitButton.textContent = 'Ок'
+              this._buttonSubmit.textContent = 'Да'
           }
       }
     }      
-
-    
-      // setEventListeners = () => {
-      //   super.setEventListeners(this._popup);
-      //   this._popup.addEventListener("submit", (evt) => {
-      //     console.log('закрываю')
-      //       evt.preventDefault()
-      //       this._handleFormSubmit();
-      //   });
-      // };
-// }

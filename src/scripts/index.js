@@ -1,5 +1,3 @@
-//Не доделал удаление и лайки. Отправляю на всякий случай, чтоб была возможность доделать на каникулах
-
 import '../pages/index.css'
 import {
     editAvatarForm, editProfileForm, editNewCardForm, 
@@ -35,18 +33,23 @@ const api = new Api({                   //9
     const sectionClass = new Section({ 
         items: res.reverse(), renderer: addCard }, sectionElements, api);
     sectionClass.renderItems();
-    console.log('Пришли карточки')
   })
 
 
   //Добавление новой карточки
 const addCardPopup = new PopupWithForm(newCardPopup, (inputValues) => {
-    addCard( {data: inputValues.title, data: inputValues.link} )
-    api.addTask({name: inputValues.title, link: inputValues.link});
-    addCardPopup.close(newCardPopup);
-    addCardFormValidator.setSubmitButtonState();
+    api.addTask({name: inputValues.title, link: inputValues.link}).then((data) => {
+        addCardPopup.setButtonText(true)
+        addCard(data)
+    })
+    .catch(() => {
+        console.log('Что-то сломалось!')
+      })
+    .finally(() => {
+        addCardPopup.setButtonText(false)
+        addCardPopup.close(newCardPopup);                          //закрытие попап
+      })
 });
-
 const sectionClass = new Section({ items: initialCards, renderer: addCard }, sectionElements, api);
 const popupWithImageClass = new PopupWithImage(popupImgOpen);
 
@@ -55,33 +58,35 @@ function addCard(data) {
         popupWithImageClass.open(data.name, data.link)
     },
     //Открываю попап подтверждения
-    () => {
-        popupWithSubmitClass.open()
-    }, 
+    deleteCard,
     api);
     const cardElement = card.createCard();
     sectionClass.addItem(cardElement);
 }                                      //Вывод данных на стр.
 
-                                                        //Удаления карточек
-const popupWithSubmitClass = new PopupWithSubmit(popupDeleteCard, deleteCardClick)
 
-const deleteCardClick = (card) => {
+                                                        //Удаление карточек
+
+
+const popupWithSubmitClass = new PopupWithSubmit(popupDeleteCard, deleteCard)
+function deleteCard(card) {
+    debugger
     popupWithSubmitClass.open()
-    popupWithSubmitClass.setOnSubmit(() => {
-    api.deleteTask()
-    .then (() => {
-        popupWithSubmitClass.setTextButton(true)
-      card.deleteCard()
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-    .finally(() => {
-        popupWithSubmitClass.setTextButton(false)
-        popupWithSubmitClass.close()
-    })
-  })
+    popupWithSubmitClass.setEventListeners()
+        // api.likeCard(card.id(), card.isLiked())
+        api.deleteTask(card.cardId)
+        .then (() => {
+          popupWithSubmitClass.setButtonText(true)
+          card.removeCard()
+        })
+        .catch(() => {
+            console.log('Что-то сломалось!')
+          })
+        .finally(() => {
+            popupWithSubmitClass.setButtonText(false)
+            popupWithSubmitClass.close(popupDeleteCard)
+        })
+    // })
 }
 
 
@@ -90,18 +95,23 @@ const deleteCardClick = (card) => {
 const userInfoClass = new UserInfo(profileTitle, profileSubtitle, profileAvatar);
 //Сохранение редактирования данных пользователя
 const editProfilePopup = new PopupWithForm(profilePopup, ({name, about}) => {
-    userInfoClass.setUserInfo({name: name, about: about})
-    editProfilePopup.close(profilePopup)//Сохранения попапа редактирования профиля
     //Отправляю данные профиля на сервер
     api.setUserInfo({name, about}).then(({name, about}) => {
+        editProfilePopup.setButtonText(true)
         userInfoClass.setUserInfo({name: name, about: about})
         userInfoClass.updataUserInfo();
+        })
+        .catch(() => {
+            console.log('Что-то сломалось!')
+          })
+        .finally(() => {
+            editProfilePopup.setButtonText(false)
+            editProfilePopup.close(profilePopup)//Сохранения попапа редактирования профиля
     })
 })
 
 //Прихоодят данные пользователя
 api.getUserInfo().then(({name, about, avatar}) => {
-    console.log('Пришли данные пользователя')
     userInfoClass.setUserInfo({name: name, about: about})
     userInfoClass.updataUserInfo();
     userInfoClass.setUserInfo({avatar: avatar})
@@ -112,12 +122,18 @@ api.getUserInfo().then(({name, about, avatar}) => {
                                                 //Работа с аватаром
 const editAvatarPopup = new PopupWithForm(popupAvatar, (avatar) => {
     userInfoClass.setUserInfo(avatar)
-    editAvatarPopup.close(popupAvatar)
     api.setUserAvatar(avatar).then((avatar) => {
+        editAvatarPopup.setButtonText(true)
         userInfoClass.setUserInfo(avatar)
         userInfoClass.updataUserAvatar();
     })
-    // .finally(() => popupAvatar.renderSave(false));
+    .catch(() => {
+        console.log('Что-то сломалось!')
+      })
+    .finally(() => {
+        editAvatarPopup.setButtonText(false)
+        editAvatarPopup.close(popupAvatar) //закрытие попапа аватара профиля
+})
 })
 
 
@@ -141,6 +157,7 @@ editBtn.addEventListener('click', () => {
 });
 //Открытие попапа добавления карточки
 buttonOpenPopupCard.addEventListener('click', () => {
+    addCardFormValidator.setSubmitButtonState()
      addCardPopup.open(newCardPopup) });
 //9 Открытие попапа смены аватара
 document.querySelector('.profile__redact-img').addEventListener('click', () => {
@@ -148,9 +165,6 @@ document.querySelector('.profile__redact-img').addEventListener('click', () => {
     avatarInput.value = currentUserAvatar.avatar;
     editAvatarPopup.open(popupAvatar);
 });
-// buttonDeleteCard.addEventListener('click', () => {
-//     popupWithSubmitClass.open(popupDeleteCard);     //Открывает попап подтверждения
-// })
 addCardPopup.setEventListeners(newCardPopup);
 popupWithImageClass.setEventListeners(popupImgOpen);
 editProfilePopup.setEventListeners(profilePopup);

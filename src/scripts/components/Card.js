@@ -5,18 +5,17 @@ export class Card {
         this._cardSelector = cardSelector;
         this._open = open;
         this._popupDeleteCard = popupDeleteCard;
-        this._id = data._id;
+        this._cardId = data._id;
         this._owner = data.owner._id;
         this._userId = 'b801fba7bd7ef0fa0591f054'
-        this._likes = data.likes
+        // this._likes = data.likes.length
         this._api = api;
-        console.log(data.owner)
     }
 
     //Добавление карточек из массива
     createCard = () => {
         this._element = this._getTemplate();
-        this._removeButtonDelete();
+        this._removeButtonDelete(this);
         this._setEventListeners();
         this._element.querySelector('.element__img').src = this._link;                  //передаю данные
         this._element.querySelector('.element__img').alt = this._name;                  //передаю данные
@@ -39,6 +38,9 @@ export class Card {
         this._element.querySelector('.element__img').addEventListener('click', () => { 
             this._open() }); //обработчик события открытия в большом размере
         this._element.querySelector('.element__delete').addEventListener('click', this.deleteCard);
+        this._element.querySelector('.element__delete').addEventListener('click', () => {
+            this.removeCard(this)
+        })
     }
 
     //функция лайка
@@ -47,25 +49,33 @@ export class Card {
     }
 
     //функция удаления карточки
-    // _deleteCard = (id) => {                                         //ДОДЕЛАТЬ УДАЛЕНИЕ
-    //     this._api.deleteTask(id).then(() => {
-    //         this._element.remove();
-    //     })
-    //     .catch(() => {console.log('Что-то сломалось')});
-    // }
+    _deleteCard = (id) => {                                         //ДОДЕЛАТЬ УДАЛЕНИЕ
+        this._api.deleteTask(id).then(() => {
+            this._element.remove();
+        })
+        .catch(() => {console.log('Что-то сломалось')});
+    }
 
     deleteCard = (evt) => {                             //Рабочая
         // evt.target.closest('.element').remove();
         this._popupDeleteCard()
     }
-
-    id() {
-        return this._id
-      }
+    removeCard = (evt) => {
+        this._element.remove();
+    }
     //Скрывает урну с чужой карточки
     _removeButtonDelete() {
         if (this._owner !== this._userId) {
             this._element.querySelector('.element__delete').style.display = 'none';
         }
       }
+
+      
+    cardId() {
+        return this._cardId
+      }
+    
+    // isLiked() {
+    //     return this._likes;
+    // }
 }

@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export class Api {
     constructor({ url, headers }) {
         this.url = url;
@@ -25,8 +23,8 @@ export class Api {
             // .catch(this._catchError);
     }
 
-    deleteTask(id) {                                    //ДОДЕЛАТЬ УДАЛЕНИЕ
-        return fetch(`${this.url}/cards/${id}`, {
+    deleteTask(cardId) {                                    //ДОДЕЛАТЬ УДАЛЕНИЕ
+        return fetch(`${this.url}/cards/${cardId}`, {
             method: 'DELETE',
             headers: this.headers,
         })
@@ -44,7 +42,7 @@ export class Api {
         .catch(this._catchError);
     }
 
-    //редактирование профиля(Отправляю данные да серсер)
+    //редактирование профиля(Отправляю данные да сервер)
     setUserInfo({name, about}) {
         return fetch(`${this.url}/users/me`, {
             method: 'PATCH',
@@ -55,7 +53,7 @@ export class Api {
             })
         })
         .then(this._handleResponse)
-        .catch(this._catchError);
+        // .catch(this._catchError);
     }
 
     //замена аватара
@@ -66,7 +64,16 @@ export class Api {
             body: JSON.stringify(avatar)
         })
         .then(this._handleResponse)
-        .catch(this._catchError);
+        // .catch(this._catchError);
+    }
+
+
+    likeCard(id, like) {
+        return fetch(`${this.url}/cards/likes/${id}`), {
+            method: like ? 'DELETE' : 'PUT',
+            headers: this.headers,
+        }
+        .then(this._handleResponse)
     }
 
 
