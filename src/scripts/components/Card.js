@@ -83,7 +83,7 @@ export class Card {
     //   pressLike() {
     //     this._elementGroup.classList.add('element__group_active');
     //   }
-    // setLikeCard() {
+    // setLikeCard = () => {
     //     if (this._elementGroup.classList.contains('element__group_active')) {
     //       this.deleteLike()
     //       this._hendleCardLike(this._cardId)

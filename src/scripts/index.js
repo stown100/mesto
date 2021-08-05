@@ -67,12 +67,11 @@ function addCard(data) {
 
 //Лайки
 function hendleCardLike(card) {
-  // debugger
-    if(card.cardId) {
-      api.likeCard(card.cardId)
-      .then((res) => {
-        console.log(res)
-        card.setLikeCard(res)
+debugger
+    // if(card.setLikeCard) {
+      api.likeCard(card.cardId, card.isLiked())
+      .then((data) => {
+        card.setLikeCard(data)
       })
       .catch(() => {
         console.log('Что-то сломалось!')
@@ -86,7 +85,8 @@ function hendleCardLike(card) {
         console.log('Что-то сломалось!')
     })
     }*/
-  }
+    
+ // }
 
                                                         //Удаление карточек
 
