@@ -67,15 +67,16 @@ function addCard(data) {
 
 //Лайки
 function hendleCardLike(card) {
-    debugger
-    if(card.isLiked(card)) {
-      api.likeCard(card.id())
+  // debugger
+    if(card.cardId) {
+      api.likeCard(card.cardId)
       .then((res) => {
+        console.log(res)
         card.setLikeCard(res)
       })
-      .catch((err) => {
-        console.log(err)
-      })
+      .catch(() => {
+        console.log('Что-то сломалось!')
+    })
     } /*else {
       api.likeCard(card.id())
       .then((res) => {
@@ -86,7 +87,6 @@ function hendleCardLike(card) {
     })
     }*/
   }
-
 
                                                         //Удаление карточек
 
@@ -151,7 +151,7 @@ const editAvatarPopup = new PopupWithForm(popupAvatar, (avatar) => {
     .catch(() => {
         console.log('Что-то сломалось!')
       })
-    .finally(() => {
+    .finally(() => { 
         editAvatarPopup.setButtonText(false)
         editAvatarPopup.close(popupAvatar) //закрытие попапа аватара профиля
 })

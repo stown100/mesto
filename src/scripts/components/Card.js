@@ -1,11 +1,11 @@
 export class Card {
-    constructor(data, cardSelector, open, popupDeleteCard, hendleCardDelet, hendleCardLike, api) {
+    constructor(data, cardSelector, open, popupDeleteCard, hendleCardLike, api) {
         this._name = data.name;
         this._link = data.link;
         this._cardSelector = cardSelector;
         this._open = open;
         this._popupDeleteCard = popupDeleteCard;
-        this._hendleCardDelet = hendleCardDelet;
+        // this._hendleCardDelet = hendleCardDelet;
         this._cardId = data._id;
         this._owner = data.owner._id;
         this._userId = 'b801fba7bd7ef0fa0591f054'
@@ -13,7 +13,6 @@ export class Card {
         this._myId = data.myId;
         this._hendleCardLike = hendleCardLike;
         this._api = api;
-        // console.log(this._hendleCardLike)
     }
 
     //Добавление карточек из массива
@@ -39,7 +38,7 @@ export class Card {
 
     _setEventListeners() {
         this._elementGroup = this._element.querySelector('.element__group')
-        this._elementGroup.addEventListener('click', this.setLikeCard); //обработчик события лайка
+        this._elementGroup.addEventListener('click', this.hendleCardLike); //обработчик события лайка
         this._element.querySelector('.element__img').addEventListener('click', () => { 
             this._open() }); //обработчик события открытия в большом размере
         this._element.querySelector('.element__delete').addEventListener('click', this.deleteCard); //открытия попапа подтверждения
@@ -65,8 +64,8 @@ export class Card {
     _likeCard = () => {
         this._elementGroup.classList.toggle('element__group_active');
     }
-      setLikeCard() {
-        //   debugger
+
+      setLikeCard = () => {
         this._isLiked = this._likes.filter(() => { return this._userId === this._owner }).length > 0
         this._elementLike.textContent = this._likes.length;
         if (this._isLiked) {
@@ -75,6 +74,25 @@ export class Card {
           this._elementGroup.classList.remove('element__group_active');
         }
       }
+      hendleCardLike = () => {
+        return this._hendleCardLike(this)
+    }
+    // deleteLike() {
+    //     this._elementGroup.classList.remove('element__group_active');
+    //   }
+    //   pressLike() {
+    //     this._elementGroup.classList.add('element__group_active');
+    //   }
+    // setLikeCard() {
+    //     if (this._elementGroup.classList.contains('element__group_active')) {
+    //       this.deleteLike()
+    //       this._hendleCardLike(this._cardId)
+    //     } else {
+    //       this.pressLike()
+    //       this._hendleCardLike(this._cardId)
+    //     }
+    //   }
+
     isLiked() {
       return this._isLiked
     }
