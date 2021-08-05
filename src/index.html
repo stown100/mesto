@@ -45,6 +45,7 @@
                         <h2 class="element__title"></h2>
                         <button type="button" class="element__like-btn">
                             <img src="<%=require('./images/Group.svg')%>" class="element__group" alt="Лайк">
+                            <p class= "element__like_number">0</p>
                         </button>
                     </div>
                 </article>
@@ -73,10 +74,10 @@
             <form class="form" action="#" name="formRedactProfile" novalidate>
                 <h3 class="form__title">Редактировать профиль</h3>
                 <input type="text" id="name" class="form__input form__input_type_name" name="name"
-                    placeholder="Жак-Ив Кусто" minlength="2" maxlength="30" required>
+                    placeholder="Имя" minlength="2" maxlength="30" required>
                 <span id="name-error" class="form__input-error"></span>
                 <input type="text" id="role" class="form__input form__input_type_role" name="about"
-                    placeholder="Исследователь океана" minlength="2" maxlength="30" required>
+                    placeholder="Профессия" minlength="2" maxlength="30" required>
                 <span id="role-error" class="form__input-error"></span>
                 <button type="submit" class="form__button" disabled>Сохранить</button>
             </form>

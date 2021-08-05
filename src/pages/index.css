@@ -25,8 +25,10 @@
 @import url(../blocks/element/__title/element__title.css);
 @import url(../blocks/element/__block/element__block.css);
 @import url(../blocks/element/__like-btn/element__like-btn.css);
+@import url(../blocks/element/__like-btn/element__like_number.css);
 @import url(../blocks/element/__group/element__group.css);
 @import url(../blocks/element/__group/_active/element__group_active.css);
+@import url(../blocks/element/__like-btn/element__like_type_active.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__img/footer__img.css);
 @import url(../blocks/popup/popup.css);

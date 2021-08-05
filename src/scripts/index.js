@@ -2,12 +2,12 @@ import '../pages/index.css'
 import {
     editAvatarForm, editProfileForm, editNewCardForm, 
     popupAvatar, profileTitle, profileSubtitle,
-    configValidation, avatarInput, editDeledeForm,
+    configValidation, avatarInput,
     editBtn, profilePopup, popupDeleteCard,
     nameInput, jobInput,
     buttonOpenPopupCard, newCardPopup,
     sectionElements, popupImgOpen,
-    cardSelector, initialCards, buttonDeleteCard,
+    cardSelector, initialCards,
     profileAvatar,
 } from './utils/constants';
 import { FormValidator } from "./components/FormValidator.js";
@@ -58,37 +58,58 @@ function addCard(data) {
         popupWithImageClass.open(data.name, data.link)
     },
     //Открываю попап подтверждения
-    deleteCard,
+    deleteCard, hendleCardLike,
     api);
     const cardElement = card.createCard();
     sectionClass.addItem(cardElement);
 }                                      //Вывод данных на стр.
 
 
+//Лайки
+function hendleCardLike(card) {
+    debugger
+    if(card.isLiked(card)) {
+      api.likeCard(card.id())
+      .then((res) => {
+        card.setLikeCard(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    } /*else {
+      api.likeCard(card.id())
+      .then((res) => {
+        card.setLikeInfo(res)
+      })
+      .catch(() => {
+        console.log('Что-то сломалось!')
+    })
+    }*/
+  }
+
+
                                                         //Удаление карточек
 
-
 const popupWithSubmitClass = new PopupWithSubmit(popupDeleteCard, deleteCard)
-function deleteCard(card) {
-    debugger
-    popupWithSubmitClass.open()
-    popupWithSubmitClass.setEventListeners()
-        // api.likeCard(card.id(), card.isLiked())
-        api.deleteTask(card.cardId)
-        .then (() => {
-          popupWithSubmitClass.setButtonText(true)
-          card.removeCard()
-        })
-        .catch(() => {
-            console.log('Что-то сломалось!')
-          })
-        .finally(() => {
-            popupWithSubmitClass.setButtonText(false)
-            popupWithSubmitClass.close(popupDeleteCard)
-        })
-    // })
-}
+popupWithSubmitClass.setEventListeners();
 
+function deleteCard(card) {
+    popupWithSubmitClass.open()
+    popupWithSubmitClass.setFormSubmit(() => {
+        api.deleteTask(card._cardId)
+            .then (() => {
+            popupWithSubmitClass.setButtonText(true)
+            card.removeCard()
+            })
+            .catch(() => {
+                console.log('Что-то сломалось!')
+            })
+            .finally(() => {
+                popupWithSubmitClass.setButtonText(false)
+                popupWithSubmitClass.close(popupDeleteCard)
+        })
+    })
+}
 
 
                                                         //Работа с редактированием профиля
@@ -154,6 +175,7 @@ editBtn.addEventListener('click', () => {
     nameInput.value = currentUserInfo.name;
     jobInput.value = currentUserInfo.about; 
     editProfilePopup.open()
+    console.log(currentUserInfo.nameInput)
 });
 //Открытие попапа добавления карточки
 buttonOpenPopupCard.addEventListener('click', () => {

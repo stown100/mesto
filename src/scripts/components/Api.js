@@ -23,7 +23,7 @@ export class Api {
             // .catch(this._catchError);
     }
 
-    deleteTask(cardId) {                                    //ДОДЕЛАТЬ УДАЛЕНИЕ
+    deleteTask(cardId) {
         return fetch(`${this.url}/cards/${cardId}`, {
             method: 'DELETE',
             headers: this.headers,
@@ -67,7 +67,7 @@ export class Api {
         // .catch(this._catchError);
     }
 
-
+    //лайки
     likeCard(id, like) {
         return fetch(`${this.url}/cards/likes/${id}`), {
             method: like ? 'DELETE' : 'PUT',
@@ -88,6 +88,4 @@ export class Api {
     _catchError() {
         console.log('Что-то сломалось');
     }
-
-    // другие методы работы с API
 }

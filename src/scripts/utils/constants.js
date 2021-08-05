@@ -7,13 +7,11 @@ export const configValidation = {
     errorClass: 'form__input'
 }
 
-export const editDeledeForm = document.querySelector('.form[name = "formDeleteCard"]');  //9
 export const editAvatarForm = document.querySelector('.form[name = "formRedactAvatar"]'); //9
 export const editProfileForm = document.querySelector('.form[name = "formRedactProfile"]');
 export const editNewCardForm = document.querySelector('.form[name = "formNewCard"]');
 export const popupDeleteCard = document.querySelector('.popup_delete'); //9
 export const popupAvatar = document.querySelector('.popup_avatar');  //9
-export const buttonDeleteCard = document.querySelector('.element__delete'); 
 export const profileTitle = document.querySelector('.profile__title');
 export const profileSubtitle = document.querySelector('.profile__subtitle');
 // export const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
