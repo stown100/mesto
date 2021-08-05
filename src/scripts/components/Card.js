@@ -61,7 +61,7 @@ export class Card {
         }
       }
 
-          //функция лайка
+    //функция лайка
     _likeCard = () => {
         this._elementGroup.classList.toggle('element__group_active');
     }
