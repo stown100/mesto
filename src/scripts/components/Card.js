@@ -5,7 +5,6 @@ export class Card {
         this._cardSelector = cardSelector;
         this._open = open;
         this._popupDeleteCard = popupDeleteCard;
-        // this._hendleCardDelet = hendleCardDelet;
         this._cardId = data._id;
         this._owner = data.owner._id;
         this._userId = 'b801fba7bd7ef0fa0591f054'
@@ -65,7 +64,10 @@ export class Card {
         this._elementGroup.classList.toggle('element__group_active');
     }
 
-      setLikeCard = () => {
+      setLikeCard = ({likes}) => {
+          if(likes) {
+              this._likes = likes
+          }
         this._isLiked = this._likes.filter(() => { return this._userId === this._owner }).length > 0
         this._elementLike.textContent = this._likes.length;
         if (this._isLiked) {
@@ -77,24 +79,9 @@ export class Card {
       hendleCardLike = () => {
         return this._hendleCardLike(this)
     }
-    // deleteLike() {
-    //     this._elementGroup.classList.remove('element__group_active');
-    //   }
-    //   pressLike() {
-    //     this._elementGroup.classList.add('element__group_active');
-    //   }
-    // setLikeCard = () => {
-    //     if (this._elementGroup.classList.contains('element__group_active')) {
-    //       this.deleteLike()
-    //       this._hendleCardLike(this._cardId)
-    //     } else {
-    //       this.pressLike()
-    //       this._hendleCardLike(this._cardId)
-    //     }
-    //   }
 
     isLiked() {
-      return this._isLiked
+        return !!this._likes.find(like => like._id === this._userId)
     }
       
     cardId() {

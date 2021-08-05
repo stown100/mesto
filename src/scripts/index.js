@@ -16,7 +16,7 @@ import { Section } from "./components/Section.js";
 import { PopupWithImage } from "./components/PopupWithImage.js";
 import { PopupWithForm } from "./components/PopupWithForm.js";
 import { UserInfo } from "./components/UserInfo.js";
-import { Api } from './components/Api';    //9
+import { Api } from './components/Api';
 import { PopupWithSubmit } from './components/PopupWithSubmit';
 
 const api = new Api({                   //9
@@ -65,28 +65,16 @@ function addCard(data) {
 }                                      //Вывод данных на стр.
 
 
-//Лайки
+                                      //Лайки
 function hendleCardLike(card) {
-debugger
-    // if(card.setLikeCard) {
-      api.likeCard(card.cardId, card.isLiked())
+      api.likeCard(card.cardId(), card.isLiked())
       .then((data) => {
         card.setLikeCard(data)
       })
       .catch(() => {
         console.log('Что-то сломалось!')
     })
-    } /*else {
-      api.likeCard(card.id())
-      .then((res) => {
-        card.setLikeInfo(res)
-      })
-      .catch(() => {
-        console.log('Что-то сломалось!')
-    })
-    }*/
-    
- // }
+}
 
                                                         //Удаление карточек
 
@@ -175,7 +163,7 @@ editBtn.addEventListener('click', () => {
     nameInput.value = currentUserInfo.name;
     jobInput.value = currentUserInfo.about; 
     editProfilePopup.open()
-    console.log(currentUserInfo.nameInput)
+    // console.log(currentUserInfo.nameInput)
 });
 //Открытие попапа добавления карточки
 buttonOpenPopupCard.addEventListener('click', () => {

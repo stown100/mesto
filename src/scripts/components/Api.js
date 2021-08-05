@@ -20,7 +20,6 @@ export class Api {
             body: JSON.stringify(data)
         })
             .then(this._handleResponse)
-            // .catch(this._catchError);
     }
 
     deleteTask(cardId) {
@@ -29,7 +28,6 @@ export class Api {
             headers: this.headers,
         })
         .then(this._handleResponse)
-        // .catch(this._catchError);
     }
 
     //Редактирование профиля(получаю данные с сервера)
@@ -53,7 +51,6 @@ export class Api {
             })
         })
         .then(this._handleResponse)
-        // .catch(this._catchError);
     }
 
     //замена аватара
@@ -64,15 +61,14 @@ export class Api {
             body: JSON.stringify(avatar)
         })
         .then(this._handleResponse)
-        // .catch(this._catchError);
     }
 
     //лайки
     likeCard(id, like) {
-        return fetch(`${this.url}/cards/likes/${id}`), {
+        return fetch(`${this.url}/cards/likes/${id}`, {
             method: like ? 'DELETE' : 'PUT',
             headers: this.headers,
-        }
+        })
         .then(this._handleResponse)
     }
 
