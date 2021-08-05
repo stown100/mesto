@@ -145,7 +145,6 @@ const editAvatarPopup = new PopupWithForm(popupAvatar, (avatar) => {
 })
 })
 
-
 //Валидации
 const avatarFormValidator = new FormValidator(configValidation, editAvatarForm)
 avatarFormValidator.enableValidation();  //Валидация формы редактирования аватара
