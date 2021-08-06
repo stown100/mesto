@@ -1,9 +1,8 @@
 export class Section {
-    constructor({ items, renderer }, sectionElements, api) {
+    constructor({ items, renderer }, sectionElement) {
         this._items = items;
         this._renderer = renderer;
-        this._sectionElements = sectionElements;
-        this._api = api;
+        this._sectionElement = sectionElement;
     }
 
     renderItems() {
@@ -11,15 +10,6 @@ export class Section {
     }
 
     addItem(cardElement) {
-        document.querySelector(this._sectionElements).prepend(cardElement);
-    }
-
-    saveItem = (data) => {
-        this._api
-        .addTask(data)
-        .then((res) => {
-            this.addItem(res)
-        })
-        .catch(() => {console.log('Карточка не добавилась')});
+        this._sectionElement.prepend(cardElement);
     }
 }

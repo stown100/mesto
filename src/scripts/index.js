@@ -50,7 +50,7 @@ const addCardPopup = new PopupWithForm(newCardPopup, (inputValues) => {
         addCardPopup.close(newCardPopup);                          //закрытие попап
       })
 });
-const sectionClass = new Section({ items: initialCards, renderer: addCard }, sectionElements, api);
+const sectionClass = new Section({ items: initialCards, renderer: addCard }, sectionElements);
 const popupWithImageClass = new PopupWithImage(popupImgOpen);
 
 function addCard(data) {
