@@ -70,7 +70,7 @@ export class Card {
         } else {
           this._elementGroup.classList.remove('element__group_active');
         }
-      }
+      
       hendleCardLike = () => {
         return this._hendleCardLike(this)
     }
