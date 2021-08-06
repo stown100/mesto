@@ -1,5 +1,5 @@
 export class Card {
-    constructor(data, cardSelector, open, popupDeleteCard, hendleCardLike, api) {
+    constructor(data, cardSelector, open, popupDeleteCard, hendleCardLike, myId) {
         this._name = data.name;
         this._link = data.link;
         this._cardSelector = cardSelector;
@@ -7,11 +7,9 @@ export class Card {
         this._popupDeleteCard = popupDeleteCard;
         this._cardId = data._id;
         this._owner = data.owner._id;
-        this._userId = 'b801fba7bd7ef0fa0591f054'
         this._likes = data.likes;
-        this._myId = data.myId;
         this._hendleCardLike = hendleCardLike;
-        this._api = api;
+        this._myId = myId;
     }
 
     //Добавление карточек из массива
@@ -54,7 +52,7 @@ export class Card {
     }
     //Скрывает урну с чужой карточки
     _removeButtonDelete() {
-        if (this._owner !== this._userId) {
+        if (this._owner !== this._myId) {
             this._element.querySelector('.element__delete').style.display = 'none';
         }
       }
@@ -63,7 +61,7 @@ export class Card {
           if(likes) {
               this._likes = likes
           }
-        this._isLiked = this._likes.filter(() => { return this._owner === this._userId }).length > 0
+        this._isLiked = this._likes.filter(() => { return this._owner === this._myId }).length > 0
         this._elementLike.textContent = this._likes.length;
         if (this._isLiked) {
           this._elementGroup.classList.add('element__group_active');
@@ -75,11 +73,16 @@ export class Card {
         return this._hendleCardLike(this)
     }
 
+    // isLiked() {
+    //     return !!this._likes.find(like => like._id === this._myId)
+    // }
     isLiked() {
-        return !!this._likes.find(like => like._id === this._userId)
+        return this._likes.some((item) => {
+            return item._id === this._myId;
+        })
     }
       
     cardId() {
         return this._cardId
     }
-}
+} 

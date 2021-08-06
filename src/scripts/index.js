@@ -27,16 +27,20 @@ const api = new Api({                   //9
     }
   });
                                                             //Работа с карточками
-  //Добавления карточек с сервера
-  api.getInitialCards()
-  .then((res) => {
-    const sectionClass = new Section({ 
-        items: res.reverse(), renderer: addCard }, sectionElements, api);
-    sectionClass.renderItems();
-  })       
-  .catch(() => {
-    console.log('Что-то сломалось!')
-})
+
+//Получение информации о пользователе и карточки с сервера
+let myId = null;
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+    .then(([userInfoClass, cardInfo]) => {
+      myId = userInfoClass._id;
+      profileTitle.textContent = userInfoClass.name
+      profileSubtitle.textContent = userInfoClass.about
+      profileAvatar.src = userInfoClass.avatar
+
+      cardInfo.forEach((item) => {               
+        addCard(item) 
+      })
+    })
 
 
   //Добавление новой карточки
@@ -44,13 +48,13 @@ const addCardPopup = new PopupWithForm(newCardPopup, (inputValues) => {
     api.addTask({name: inputValues.title, link: inputValues.link}).then((data) => {
         addCardPopup.setButtonText(true)
         addCard(data)
+        addCardPopup.close(newCardPopup);//закрытие попап
     })
     .catch(() => {
         console.log('Что-то сломалось!')
       })
     .finally(() => {
         addCardPopup.setButtonText(false)
-        addCardPopup.close(newCardPopup);                          //закрытие попап
       })
 });
 const sectionClass = new Section({ items: initialCards, renderer: addCard }, sectionElements);
@@ -61,11 +65,13 @@ function addCard(data) {
         popupWithImageClass.open(data.name, data.link)
     },
     //Открываю попап подтверждения
-    deleteCard, hendleCardLike,
-    api);
+    deleteCard, hendleCardLike, myId);
     const cardElement = card.createCard();
-    sectionClass.addItem(cardElement);
+    creationCard(cardElement)
 }                                      //Вывод данных на стр.
+function creationCard(cardElement) {
+    sectionClass.addItem(cardElement)
+}
 
 
                                       //Лайки
@@ -80,7 +86,6 @@ function hendleCardLike(card) {
 }
 
                                                         //Удаление карточек
-
 const popupWithSubmitClass = new PopupWithSubmit(popupDeleteCard, deleteCard)
 popupWithSubmitClass.setEventListeners();
 
@@ -91,13 +96,13 @@ function deleteCard(card) {
             .then (() => {
             popupWithSubmitClass.setButtonText(true)
             card.removeCard()
+            popupWithSubmitClass.close(popupDeleteCard)
             })
             .catch(() => {
                 console.log('Что-то сломалось!')
             })
             .finally(() => {
                 popupWithSubmitClass.setButtonText(false)
-                popupWithSubmitClass.close(popupDeleteCard)
         })
     })
 }
@@ -108,48 +113,35 @@ const userInfoClass = new UserInfo(profileTitle, profileSubtitle, profileAvatar)
 //Сохранение редактирования данных пользователя
 const editProfilePopup = new PopupWithForm(profilePopup, ({name, about}) => {
     //Отправляю данные профиля на сервер
-    api.setUserInfo({name, about}).then(({name, about}) => {
+    api.setUserInfo({name, about})
+    .then((data) => {
         editProfilePopup.setButtonText(true)
-        userInfoClass.setUserInfo({name: name, about: about})
-        userInfoClass.updataUserInfo();
+        userInfoClass.setUserInfo(data.name, data.about)
+        editProfilePopup.close(profilePopup)//Сохранения попапа редактирования профиля
         })
         .catch(() => {
             console.log('Что-то сломалось!')
           })
         .finally(() => {
             editProfilePopup.setButtonText(false)
-            editProfilePopup.close(profilePopup)//Сохранения попапа редактирования профиля
     })
 })
-
-//Прихоодят данные пользователя
-api.getUserInfo().then(({name, about, avatar}) => {
-    userInfoClass.setUserInfo({name: name, about: about})
-    userInfoClass.updataUserInfo();
-    userInfoClass.setUserInfo({avatar: avatar})
-    userInfoClass.updataUserAvatar();
-  })
-  .catch(() => {
-    console.log('Что-то сломалось!')
-})
-  
-
                                                 //Работа с аватаром
 const editAvatarPopup = new PopupWithForm(popupAvatar, (avatar) => {
-    userInfoClass.setUserInfo(avatar)
-    api.setUserAvatar(avatar).then((avatar) => {
+    api.setUserAvatar(avatar)
+    .then((data) => {
         editAvatarPopup.setButtonText(true)
-        userInfoClass.setUserInfo(avatar)
-        userInfoClass.updataUserAvatar();
+        userInfoClass.serUserAvatar(data.avatar)
+        editAvatarPopup.close(popupAvatar) //закрытие попапа аватара профиля
     })
     .catch(() => {
         console.log('Что-то сломалось!')
       })
     .finally(() => { 
         editAvatarPopup.setButtonText(false)
-        editAvatarPopup.close(popupAvatar) //закрытие попапа аватара профиля
 })
 })
+  
 
 //Валидации
 const avatarFormValidator = new FormValidator(configValidation, editAvatarForm)
