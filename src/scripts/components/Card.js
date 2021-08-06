@@ -10,6 +10,7 @@ export class Card {
         this._likes = data.likes;
         this._hendleCardLike = hendleCardLike;
         this._myId = myId;
+        console.log(this._likes)
     }
 
     //Добавление карточек из массива
@@ -61,7 +62,7 @@ export class Card {
           if(likes) {
               this._likes = likes
           }
-        this._isLiked = this._likes.filter(() => { return this._owner === this._myId }).length > 0
+        this._isLiked = Boolean (this._likes.some((item) => { return item._id === this._myId }))
         this._elementLike.textContent = this._likes.length;
         if (this._isLiked) {
           this._elementGroup.classList.add('element__group_active');
@@ -71,15 +72,10 @@ export class Card {
       }
       hendleCardLike = () => {
         return this._hendleCardLike(this)
-    }
+      }
 
-    // isLiked() {
-    //     return !!this._likes.find(like => like._id === this._myId)
-    // }
     isLiked() {
-        return this._likes.some((item) => {
-            return item._id === this._myId;
-        })
+        return this._isLiked
     }
       
     cardId() {

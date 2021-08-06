@@ -9,15 +9,15 @@ import {
     sectionElements, popupImgOpen,
     cardSelector, initialCards,
     profileAvatar,
-} from './utils/constants';
-import { FormValidator } from "./components/FormValidator.js";
-import { Card } from "./components/Card.js";
-import { Section } from "./components/Section.js";
-import { PopupWithImage } from "./components/PopupWithImage.js";
-import { PopupWithForm } from "./components/PopupWithForm.js";
-import { UserInfo } from "./components/UserInfo.js";
-import { Api } from './components/Api';
-import { PopupWithSubmit } from './components/PopupWithSubmit';
+} from '../scripts/utils/constants';
+import { FormValidator } from "../scripts/components/FormValidator.js";
+import { Card } from "../scripts/components/Card.js";
+import { Section } from "../scripts/components/Section.js";
+import { PopupWithImage } from "../scripts/components/PopupWithImage.js";
+import { PopupWithForm } from "../scripts/components/PopupWithForm.js";
+import { UserInfo } from "../scripts/components/UserInfo.js";
+import { Api } from '../scripts/components/Api';
+import { PopupWithSubmit } from '../scripts/components/PopupWithSubmit';
 
 const api = new Api({                   //9
     url: 'https://mesto.nomoreparties.co/v1/cohort-26',
