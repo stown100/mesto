@@ -45,11 +45,11 @@ export class Card {
     }
 
     //функция удаления карточки
-    deleteCard = (evt) => {
+    deleteCard = () => {
         return this._popupDeleteCard(this)
     }
 
-    removeCard = (evt) => {
+    removeCard = () => {
         this._element.remove();
     }
     //Скрывает урну с чужой карточки
@@ -58,17 +58,12 @@ export class Card {
             this._element.querySelector('.element__delete').style.display = 'none';
         }
       }
-
-    //функция лайка
-    _likeCard = () => {
-        this._elementGroup.classList.toggle('element__group_active');
-    }
-
+//Функция лайка
       setLikeCard = ({likes}) => {
           if(likes) {
               this._likes = likes
           }
-        this._isLiked = this._likes.filter(() => { return this._userId === this._owner }).length > 0
+        this._isLiked = this._likes.filter(() => { return this._owner === this._userId }).length > 0
         this._elementLike.textContent = this._likes.length;
         if (this._isLiked) {
           this._elementGroup.classList.add('element__group_active');

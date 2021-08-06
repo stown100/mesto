@@ -10,13 +10,13 @@ export class UserInfo {
 
     getUserInfo() {
         return {
-            name: this.name,
-            about: this.about,
+            name: this._profileName.textContent,
+            about: this._profileJob.textContent,
         }
     }
     getUserAvatar() {
         return {
-            avatar: this.avatar
+            avatar: this._profileAvatar.src
         }
     }
 

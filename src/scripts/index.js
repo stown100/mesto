@@ -158,11 +158,11 @@ addCardFormValidator.enableValidation(); //Валидация формы доб�
 //События
 //Открытие попапа редактирования профиля
 editBtn.addEventListener('click', () => {
+    debugger
     const currentUserInfo = userInfoClass.getUserInfo();
     nameInput.value = currentUserInfo.name;
     jobInput.value = currentUserInfo.about; 
     editProfilePopup.open()
-    // console.log(currentUserInfo.nameInput)
 });
 //Открытие попапа добавления карточки
 buttonOpenPopupCard.addEventListener('click', () => {
