@@ -10,9 +10,8 @@ export class Api {
             headers: this.headers,
         })
         .then(this._handleResponse)
-        .catch(this._catchError);
     }
-    //добавление карточки
+    //добавление новой карточки
     addTask(data) {
         return fetch(`${this.url}/cards`, {
             method: 'POST',
@@ -21,7 +20,7 @@ export class Api {
         })
             .then(this._handleResponse)
     }
-
+    //Удаление карточки
     deleteTask(cardId) {
         return fetch(`${this.url}/cards/${cardId}`, {
             method: 'DELETE',
@@ -37,7 +36,6 @@ export class Api {
             headers: this.headers,
         })
         .then(this._handleResponse)
-        .catch(this._catchError);
     }
 
     //редактирование профиля(Отправляю данные да сервер)
@@ -79,9 +77,5 @@ export class Api {
         }
         // если ошибка, отклоняем промис
         return Promise.reject(`Ошибка: ${res.status}`);
-    }
-
-    _catchError() {
-        console.log('Что-то сломалось');
     }
 }

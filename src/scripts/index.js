@@ -33,7 +33,10 @@ const api = new Api({                   //9
     const sectionClass = new Section({ 
         items: res.reverse(), renderer: addCard }, sectionElements, api);
     sectionClass.renderItems();
-  })
+  })       
+  .catch(() => {
+    console.log('Что-то сломалось!')
+})
 
 
   //Добавление новой карточки
@@ -126,6 +129,9 @@ api.getUserInfo().then(({name, about, avatar}) => {
     userInfoClass.setUserInfo({avatar: avatar})
     userInfoClass.updataUserAvatar();
   })
+  .catch(() => {
+    console.log('Что-то сломалось!')
+})
   
 
                                                 //Работа с аватаром
@@ -158,7 +164,6 @@ addCardFormValidator.enableValidation(); //Валидация формы доб�
 //События
 //Открытие попапа редактирования профиля
 editBtn.addEventListener('click', () => {
-    debugger
     const currentUserInfo = userInfoClass.getUserInfo();
     nameInput.value = currentUserInfo.name;
     jobInput.value = currentUserInfo.about; 
